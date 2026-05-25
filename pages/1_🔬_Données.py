@@ -5,7 +5,7 @@ from PIL import Image
 import random
 import plotly.express as px
 from utils.config import vspace
-from utils.config import (COMMON_CSS, SAMPLE_DIR, CLASSES_FR, IMG_SIZE_DL, QUALITY_DIR)
+from utils.config import (COMMON_CSS, SAMPLE_DIR, CLASSES_FR, IMG_SIZE_DL, QUALITY_IMAGES)
  
 st.set_page_config(page_title="Données", page_icon="🔬", layout="wide")
 st.markdown(COMMON_CSS, unsafe_allow_html=True)
@@ -36,17 +36,6 @@ def distribution_show():
     )
     fig.update_xaxes(range=[0, 22])
     return fig
- 
- 
-@st.cache_data
-def get_bad_quality_images():
-    paths = glob(f"{QUALITY_DIR}/*")
-    imgs = []
-    for path in paths:
-        img = Image.open(path).convert("RGB")
-        img = img.resize(IMG_SIZE_DL)
-        imgs.append(img)
-    return imgs
  
  
 def get_images_of_class(cls, n=5):
@@ -154,16 +143,16 @@ Les analyses Grad-CAM ont montré que certains modèles focalisent parfois leur 
 Il est également à noter qu'une faible proportion d'images présentent un fond rose (2,8%) .
 """)
  
-imgs = get_bad_quality_images()
 captions = ["Cellules doubles", "Cellules multiples", "Variation de coloration"]
  
 vspace(20)
 cols = st.columns(5)
-for i in range(3):
+for i, (key, path) in enumerate(QUALITY_IMAGES.items()):
     with cols[i+1]:
-        st.image(imgs[i])
-        st.caption(captions[i])
- 
+        st.image(path)
+        st.caption(key) 
+    i += 1
+
 st.divider()
  
 # ── Source ────────────────────────────────────────────────────────────────────

@@ -72,6 +72,12 @@ MODEL_MAP = {
     "Ensemble (EffV2S + VGG19 + Xception)" : "ensemble"
 }
 
+QUALITY_IMAGES = {
+    "Cellules doubles": f"{QUALITY_DIR}/doubles.jpg",
+    "Cellules multiples": f"{QUALITY_DIR}/multiples.jpg",
+    "Variation de coloration": f"{QUALITY_DIR}/variationcoloration.jpg",
+}
+
 ML_PATH_MAP = {
     "SVM": f"{ML_MODELS_DIR}/svm.pkl",
     "XGBoost": f"{ML_MODELS_DIR}/xgb.pkl",
