@@ -230,11 +230,10 @@ COMMON_CSS = """
         margin: 3px;
     }
     .section-label {
-        font-size: 11px;
+        font-size: 13px;
         font-weight: 600;
         letter-spacing: 0.07em;
         text-transform: uppercase;
-        color: #888;
         margin-bottom: 10px;
         margin-top: 4px;
     }
