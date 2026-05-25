@@ -43,7 +43,7 @@ with col1:
     <div class="card">
         <h3>⚙️ Machine Learning</h3><br>
         <div class="section-label">Extraction de caractéristiques</div>
-        <div style="font-size:16px; color:#555;">✓ K-Means espace LAB</div>
+        <div style="font-size:16px; color:#555;">✓ K-Means espace L*a*b*</div>
         <div style="font-size:16px; color:#555;">✓ Statistiques intra-clusters</div>
         <div style="font-size:16px; color:#555;">✓ GLCM, Sobel</div>
         <div style="font-size:16px; color:#555;">✓ Réduction de dimensions</div>

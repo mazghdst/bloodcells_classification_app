@@ -47,7 +47,7 @@ with tab1:
             padding:20px 30px;">
             <div><b>Images RGB</b><br><span style="color:#888;font-size:13px;">128 × 128</span></div>
             <div style="font-size:24px; color:#888;">→</div>
-            <div><b>Espace LAB</b><br><span style="color:#888;font-size:13px;">conversion</span></div>
+            <div><b>Espace L*a*b*</b><br><span style="color:#888;font-size:13px;">conversion</span></div>
             <div style="font-size:24px; color:#888;">→</div>
             <div><b>K-Means</b><br><span style="color:#888;font-size:13px;">k = 13 clusters</span></div>
             <div style="font-size:24px; color:#888;">→</div>
@@ -65,8 +65,8 @@ with tab1:
                         "Texture", "Texture"],
             "Feature"   : [
                 "Histogrammes clusters",
-                "LAB intra — moyennes",
-                "LAB intra — écart-types",
+                "L*a*b* intra — moyennes",
+                "L*a*b* intra — écart-types",
                 "Histogrammes radiaux",
                 "Contraste",
                 "Statistiques globales",
