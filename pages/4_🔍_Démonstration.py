@@ -311,19 +311,12 @@ with tab2:
 
     st.header("⚡ Comparaison entre modèles")     
 
-    compare_approche = st.radio(
-        "Approche",
-        ["Machine Learning", "Deep Learning"],
-        horizontal=True,
-        key="compare_mode"
-    )
-
     compare_categorie = st.selectbox("Catégorie", [
             "Basophile", "Éosinophile", "Érythroblaste", "IG",
             "Lymphocyte", "Monocyte", "Neutrophile", "Plaquette"
         ], 
         key="compare_categorie",
-        index=None,
+        index=None, 
         placeholder="Choisir une option")
 
     if (
@@ -370,95 +363,84 @@ with tab2:
 
     if compare_image and st.button("⚡ Comparer", disabled=compare_image is None):
         with st.spinner("Analyse en cours..."):
-            if compare_approche == "Machine Learning":
 
-                models = {
-                    name: load_ml_model(name) for name in ML_PATH_MAP
-                }
+            models = {
+                name: load_ml_model(name) for name in ML_PATH_MAP
+            }
+            model_names = list(models.keys())
 
-                cols = st.columns(3)
-                model_names = list(models.keys())
+            cols = st.columns(len(model_names))
 
-                for i in range(3):
-                    with cols[i]:
-                        name = model_names[i]
+            for i in range(len(model_names)):
+                with cols[i]:
+                    name = model_names[i]
+                    model = models[name]
+
+                    probs, label = predict_ml(model, compare_image)
+
+                    st.subheader(name)
+
+                    if label == compare_categorie:
+                        st.success(f"**Classe prédite : {label}**")
+                    else:
+                        st.error(f"**Classe prédite : {label}**")
+
+
+                    df_probas = pd.DataFrame({
+                        "Classe": CLASSES_FR,
+                        "Probabilité": [round(prob, 4) for prob in probs]
+                    }).sort_values("Probabilité", ascending=False)
+                            
+                    st.dataframe(
+                        df_probas[df_probas["Probabilité"] != 0], 
+                        use_container_width=True, 
+                        hide_index=True
+                    )
+
+            st.divider()
+
+            models = {
+                name: load_dl_model(name) for name in DL_PATH_MAP
+            }
+
+            model_names = list(models.keys())
+
+            cols_per_row = 3
+
+            for i in range(0, len(model_names), cols_per_row):
+                cols = st.columns(cols_per_row)
+
+                for j, col in enumerate(cols):
+                    if i+j < len(model_names):
+
+                        name = model_names[i+j]
                         model = models[name]
 
-                        probs, label = predict_ml(model, compare_image)
+                        probs,label = predict_dl(model,compare_image)
 
-                        st.subheader(name)
+                        with col:
 
-                        if label == compare_categorie:
-                            st.success(f"**Classe prédite : {label}**")
-                        else:
-                            st.error(f"**Classe prédite : {label}**")
+                            st.subheader(name)
 
+                            if label == compare_categorie:
+                                st.success(f"**Classe prédite : {label}**")
+                            else:
+                                st.error(f"**Classe prédite : {label}**")
 
-                        df_probas = pd.DataFrame({
-                            "Classe": CLASSES_FR,
-                            "Probabilité": [round(prob, 4) for prob in probs]
-                        }).sort_values("Probabilité", ascending=False)
-                            
-                        st.dataframe(
-                            df_probas[df_probas["Probabilité"] != 0], 
-                            use_container_width=True, 
-                            hide_index=True
-                        )
+                            df=pd.DataFrame({
+                                "Classe":CLASSES_FR,
+                                "Probabilité":
+                                np.round(probs,4)
+                            })
 
-            else :
-
-                models = {
-                    name: load_dl_model(name) for name in DL_PATH_MAP
-                }
-
-                model_names = list(models.keys())
-
-                cols_per_row = 3
-
-                for i in range(0, len(model_names), cols_per_row):
-                    cols = st.columns(cols_per_row)
-
-                    for j, col in enumerate(cols):
-                        if i+j < len(model_names):
-
-                            name = model_names[i+j]
-                            model = models[name]
-
-                            probs,label = predict_dl(model,compare_image)
-
-                            gradcam_im,_ = grad_cam(compare_image,model,MODEL_MAP.get(name))
-
-                            with col:
-
-                                with st.container(border=True):
-
-                                    st.subheader(name)
-
-                                    st.image(gradcam_im,use_container_width=True)
-
-                                    if name in ["ResNet50V2", "Xception"]:
-
-                                        st.caption("⚠️ Grad-CAM non interprétable")
-
-                                    if label == compare_categorie:
-                                        st.success(f"**Classe prédite : {label}**")
-                                    else:
-                                        st.error(f"**Classe prédite : {label}**")
-
-                                    df=pd.DataFrame({
-                                        "Classe":CLASSES_FR,
-                                        "Probabilité":
-                                        np.round(probs,4)
-                                    })
-
-                                    st.dataframe(
-                                        df.sort_values(
-                                            "Probabilité",
-                                            ascending=False
-                                        ).head(3),
-                                        hide_index=True,
-                                        use_container_width=True
-                                    )
+                            st.dataframe(
+                                df.sort_values(
+                                    "Probabilité",
+                                    ascending=False
+                                ).head(3),
+                                hide_index=True,
+                                use_container_width=True
+                            )
         
 
 

@@ -97,7 +97,6 @@ with tab1:
 
     st.subheader("⚡ Classifieurs")
 
-    vspace(10)
 
     st.markdown("""
     Les classifieurs reçoivent en entrée le **vecteur de 156 features** extrait par le pipeline K-Means.
@@ -235,8 +234,6 @@ with tab1:
 with tab2:
 
     st.subheader("⚡ Architectures")
-
-    vspace(10)
 
     st.markdown("""
     Tous les modèles DL utilisent le **Transfer Learning** : pré-entraînés sur ImageNet,
