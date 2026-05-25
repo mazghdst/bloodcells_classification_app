@@ -4,7 +4,7 @@
 
 Interactive Streamlit app presenting a complete pipeline for automatic blood cell classification on the **PBC dataset** (17 095 images, 8 classes, 360×363 px, JPG), comparing two approaches:
 
-- 🧮 **Machine Learning** — handcrafted feature extraction + classical classifiers
+- ⚙️ **Machine Learning** — handcrafted feature extraction + classical classifiers
 - 🧠 **Deep Learning** — transfer learning with fine-tuning
 
 ---

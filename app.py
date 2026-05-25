@@ -32,41 +32,6 @@ st.markdown("""
 st.divider()
 
 
-st.markdown("""
-<style>
-.card {
-    border-radius: 12px;
-    border: 1px solid #e8e8e8;
-    padding: 20px 22px;
-    min-height: 360px;
-}
-.card-ml { border-top: 4px solid #7F77DD; }
-.card-dl { border-top: 4px solid #1D9E75; }
- 
-.tag {
-    display: inline-block;
-    font-size: 12px;
-    padding: 4px 12px;
-    border-radius: 20px;
-    border: 1px solid #d0d0d0;
-    background: #f0f0f0;
-    color: #333;
-    margin: 3px;
-}
-.section-label {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    color: #888;
-    margin-bottom: 10px;
-    margin-top: 4px;
-}
-.tag-ml { background: #EEEDFE; color: #3C3489; }
-.tag-dl { background: #E1F5EE; color: #085041; }
-</style>
-""", unsafe_allow_html=True)
-
 
  
 st.header("Deux approches étudiées")
@@ -76,35 +41,32 @@ col1, col2 = st.columns(2, gap="medium")
 with col1:
     st.markdown("""
     <div class="card">
-        <h3>🧮 Machine Learning</h3><br>
+        <h3>⚙️ Machine Learning</h3><br>
         <div class="section-label">Extraction de caractéristiques</div>
-        ✓ K-Means espace LAB<br>
-        ✓ Statistiques intra-clusters<br>
-        ✓ GLCM, Sobel<br>
-        ✓ Réduction de dimensions<br><br>
+        <div style="font-size:16px; color:#555;">✓ K-Means espace LAB</div>
+        <div style="font-size:16px; color:#555;">✓ Statistiques intra-clusters</div>
+        <div style="font-size:16px; color:#555;">✓ GLCM, Sobel</div>
+        <div style="font-size:16px; color:#555;">✓ Réduction de dimensions</div>
+        <br>
         <div class="section-label">Modèles</div>
-        <span class="tag">SVM</span>
-        <span class="tag">XGBoost</span>
-        <span class="tag">Voting Classifier</span>
-    </div>
+        <div style="font-size:16px; color:#555;">SVM · XGBoost · Voting Classifier</div>    </div>
     """, unsafe_allow_html=True)
  
 with col2:
     st.markdown("""
     <div class="card">
         <h3>🧠 Deep Learning</h3><br>
-        <div class="section-label">Méthode</div>
-        ✓ Transfer learning <br>
-        ✓ Fine tuning<br><br>
+        <div class="section-label">Méthodes</div>
+        <div style="font-size:16px; color:#555;">✓ Data augmentation</div>
+        <div style="font-size:16px; color:#555;">✓ Transfer learning</div>
+        <div style="font-size:16px; color:#555;">✓ Fine tuning</div>
+        <br>
         <div class="section-label">Architectures</div>
-        <span class="tag">EfficientNetV2S</span>
-        <span class="tag">EfficientNetV2M</span>
-        <span class="tag">DenseNet121</span>
-        <span class="tag">ResNet50V2</span>
-        <span class="tag">VGG19</span>
-        <span class="tag">Xception</span>
-    </div>
+        <div style="font-size:16px; color:#555;">EfficientNetV2S · EfficientNetV2M · DenseNet121 · 
+                ResNet50V2 · VGG19 · Xception</div>   
+        </div>
     """, unsafe_allow_html=True)
+
 
 st.divider()
 
