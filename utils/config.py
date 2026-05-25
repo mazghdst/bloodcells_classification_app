@@ -87,6 +87,12 @@ DL_PATH_MAP = {
     "Xception": f"{DL_MODELS_DIR}/xception.keras",
 }
 
+GRADCAM_PATH_MAP = {
+    "EfficientNetV2S": f"{DL_MODELS_DIR}/efficientnetv2s.keras",
+    "EfficientNetV2M": f"{DL_MODELS_DIR}/efficientnetv2m.keras",
+    "VGG19": f"{DL_MODELS_DIR}/vgg19.keras",
+}
+
 # Palette UMAP cohérente avec le plot original
 PALETTE_FR = {
     "Basophile"     : "#555555",
