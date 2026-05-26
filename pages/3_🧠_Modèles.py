@@ -128,7 +128,7 @@ with tab1:
         <div style="background:#f8f8f8; border-radius:10px; padding:16px 24px; flex:2;">
             <div style="font-size:13px; color:#888;">🏆 Meilleur modèle ML</div>
             <div style="font-size:28px; font-weight:500; margin:8px 0;">Voting Classifier</div>
-            <div style="font-size:13px; color:#888;">SVM + XGBoost · vote soft</div>
+            <div style="font-size:13px; color:#888;">SVM + XGBoost</div>
         </div>
         <div style="background:#f8f8f8; border-radius:10px; padding:16px 24px; flex:1;">
             <div style="font-size:13px; color:#888;">Accuracy</div>
@@ -276,7 +276,7 @@ with tab2:
         <div style="background:#f8f8f8; border-radius:10px; padding:16px 24px; flex:2;">
             <div style="font-size:13px; color:#888;">🏆 Meilleur modèle DL</div>
             <div style="font-size:28px; font-weight:500; margin:8px 0;">Ensemble</div>
-            <div style="font-size:13px; color:#888;">EfficientNetV2S + VGG19 + ResNet50V2 + Xception · vote soft</div>
+            <div style="font-size:13px; color:#888;">EfficientNetV2S + VGG19 + ResNet50V2 + Xception</div>
         </div>
         <div style="background:#f8f8f8; border-radius:10px; padding:16px 24px; flex:1;">
             <div style="font-size:13px; color:#888;">Accuracy</div>
