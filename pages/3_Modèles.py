@@ -83,7 +83,7 @@ def read(history_path):
     return history_dict
     
 st.title("🧠 Modèles")
-st.subheader("Présentation des modèles, métriques et matrices de confusion")
+st.subheader("Présentation des modèles et résultats associés")
 
 vspace(40)
 
