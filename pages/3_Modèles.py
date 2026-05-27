@@ -169,8 +169,8 @@ with tab1:
     with st.expander("Résultats Validation Croisée 5-Fold (ML uniquement)"):
         data_cv5 = {
             "Modèle": ["SVM", "XGBoost", "Voting Classifier"],
-            "Accuracy": ["97.61% ± 0.30", "97.61% ± 0.31", "98.10% ± 0.31"],
-            "F1 macro": ["97.62% ± 0.37", "97.64% ± 0.33", "98.23% ± 0.32"],
+            "Accuracy": ["97.61% ± 0.30", "97.61% ± 0.31", "98.13% ± 0.29"],
+            "F1 macro": ["97.62% ± 0.37", "97.64% ± 0.33", "98.24% ± 0.31"],
         }
         st.dataframe(data_cv5)
         st.caption("La CV5 n'a pas été appliquée aux modèles DL en raison du coût computationnel.")
@@ -179,12 +179,11 @@ with tab1:
     st.subheader("Interprétabilité — SHAP par classe")
     st.caption("Top 10 des features contribuant à la classification de chaque type cellulaire.")
 
-    st.write("La figure ci-dessous représente les couleurs des centres des clusters K-Means triés par luminosité décroissante — du violet foncé (cluster 1) au beige clair (cluster 13).")
+    st.write("La figure ci-dessous représente les couleurs des centres des clusters K-Means triés par luminosité décroissante.")
     cols = st.columns([0.5, 2, 0.5])
     with cols[1]:
         st.image("images/figures/cluster_colors.png", width=700)
-    st.caption("""Le cluster 11 (rose clair brillant) correspond à la couleur du fond des images qui présentent une coloration de fond différente (2.8% des images du dataset).
-                Son absence du top SHAP indique que le modèle ne s'appuie pas sur cet artefact pour sa classification.""")
+
                
     captions = {
     "Basophile": "Reconnu principalement par la faible luminosité de son noyau "
