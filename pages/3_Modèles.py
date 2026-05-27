@@ -225,7 +225,7 @@ with tab1:
     cols = st.columns([0.25, 2, 0.25])
     with cols[1]:
         st.image(f"images/shap/shap_{classe}.png")
-    st.caption(captions[classe])
+    st.write(captions[classe])
 
 
 
