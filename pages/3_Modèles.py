@@ -188,13 +188,13 @@ with tab1:
                
     captions = {
     "Basophile": "Reconnu principalement par la faible luminosité de son noyau "
-    "(Intra mean 2 L bas) — le cluster 2 correspond au violet foncé caractéristique. "
-    "Une luminosité élevée dans ce cluster pousse fortement contre la classe. "
-    "Les teintes rosées du cytoplasme (cluster 8) contribuent positivement.",
+    "(Intra mean 2 L bas) — le cluster 2 correspondant au violet foncé caractéristique."
+    "Une luminosité élevée dans ce cluster ainsi que la présence de teintes roses du cluster 5, poussent fortement contre la classe.",
     
+        
     "Éosinophile": "Reconnu par sa grande taille — la faible proportion de fond (cluster 9) "
-    "indique un cytoplasme volumineux. Les teintes chaudes et orangées du cytoplasme granuleux (clusters 7 et 10) "
-    "sont le signal colorimétrique distinctif. C'est la cellule la plus reconnaissable visuellement.",
+    "indique un cytoplasme volumineux. La teinte rose du cytoplasme (cluster 5) "
+    "est le signal colorimétrique distinctif. C'est la cellule la plus reconnaissable visuellement.",
     
     "Érythroblaste": "Reconnu par la texture homogène et dense de son noyau (GLCM homogeneity élevée) — "
     "contrairement aux autres cellules à noyau sombre, il est compact et sans granularité. "
@@ -205,16 +205,16 @@ with tab1:
     "qui regroupe plusieurs stades de maturation. Reconnu par sa grande taille (cluster 9 faible) et la variabilité "
     "de luminosité dans son noyau irrégulier (Intra std 1 L), absent chez les cellules matures.",
     
-    "Lymphocyte": "L'absence de pixels violet du cluster 2 au centre de l'image (r1 hist 2 bas) le distingue du basophile. L'absence de teintes orangées (cluster 7) "
-    "le distingue de l'éosinophile. Signal spatial dominant via les histogrammes radiaux.",
+    "Lymphocyte": "L'absence de pixels violet du cluster 2 au centre de l'image (r1 hist 2 bas) et l'absence de teintes orangées (cluster 7) "
+    "le distingue de l'éosinophile.",
     
-    "Monocyte": "Reconnu par sa très grande taille — la plus faible proportion de fond du dataset (cluster 9 très bas). "
-    "Son cytoplasme gris-bleuté s'étend jusqu'en périphérie (cluster 3 en r2 et r3). "
+    "Monocyte": "Reconnu par sa très grande taille avec la plus faible proportion de fond du dataset (cluster 9 très bas). "
+    "Son cytoplasme violet s'étend jusqu'en périphérie (cluster 3 en r2 et r3). "
     "La variabilité colorimétrique globale (Global std B) reflète la présence de vacuoles caractéristiques.",
     
     "Neutrophile": "Reconnu principalement par la distribution spatiale de son noyau multilobé — "
     "les histogrammes radiaux dominent le signal (r1, r2 hist). Les lobes du noyau s'étendent dans l'anneau r2 "
-    "(r2 hist 1 élevé) tandis que le centre peut être partiellement vide entre les lobes. "
+    "(r2 hist 1 élevé)."
     "C'est le seul type où la structure spatiale prime sur la couleur.",
     
     "Plaquette": "Reconnu par l'absence totale de cytoplasme — là où les autres cellules ont des pixels foncés en r2, la plaquette n'a que du fond beige (r2 hist 1 très bas, r2 hist 13 élevé). L'image est quasi homogène (Global std L et A faibles). Les valeurs SHAP les plus extrêmes du dataset confirment que c'est la classe la plus facile à identifier.",
@@ -225,6 +225,7 @@ with tab1:
     cols = st.columns([0.25, 2, 0.25])
     with cols[1]:
         st.image(f"images/shap/shap_{classe}.png")
+    vspace(10)
     st.write(captions[classe])
 
 
