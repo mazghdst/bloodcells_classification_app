@@ -28,9 +28,9 @@ tab1,tab2 = st.tabs([
 ])
 
 with tab1:
-    st.header("Extraction de caractéristiques")
+    st.subheader("Extraction de caractéristiques")
 
-    st.markdown("Le pipeline ML transforme chaque image brute en un **vecteur de 156 features**.")
+    st.markdown("Le pipeline de machine learning transforme chaque image brute en un **vecteur de 156 features**.")
 
     col1, col2, col3 = st.columns([0.01,1,0.01])
 
@@ -74,8 +74,8 @@ with tab1:
                         "Texture", "Texture"],
             "Feature"   : [
                 "Histogrammes clusters",
-                "L*a*b* intra-cluster — moyennes",
-                "L*a*b* intra-cluster — écart-types",
+                "Moyennes intra-clusters",
+                "Écart-types intra-clusters",
                 "Histogrammes radiaux",
                 "Contraste",
                 "Statistiques globales",
@@ -134,9 +134,9 @@ with tab1:
     st.divider()
 
 
-    st.header("UMAP — projection des features")
+    st.subheader("UMAP — projection des features")
 
-    st.write("Chaque image est représentée par un point dans cet espace 2D, obtenu par réduction des 156 features extraites. La couleur indique la classe cellulaire.")
+    st.write("Projection UMAP des images à partir des 156 features extraites par le pipeline ML, réduite à 2 composantes. Chaque point représente une image, coloré selon sa classe cellulaire.")
 
     df_umap = load_umap(UMAP_CSV)
     classes = sorted(df_umap["label"].unique())
@@ -207,7 +207,7 @@ with tab1:
                 "umap_2":"UMAP dim 2",
                 "label":"Classe"
             },
-            title=f"UMAP — {len(df_plot):,} cellules · {len(selected_classes)} classes",
+            title=f"{len(df_plot):,} cellules · {len(selected_classes)} classes",
             opacity=opacity
         )
 
@@ -229,21 +229,19 @@ with tab1:
         st.plotly_chart(fig_umap)
 
     vspace(5)
-    st.caption("➡️ Clusters bien séparés = features discriminantes")
-
+    st.caption("La projection UMAP montre que les features extraites sont globalement discriminantes, avec des clusters bien séparés pour la majorité des classes. Cependant, certaines classes présentent un chevauchement partiel, correspondant aux catégories de cellules les plus proches morphologiquement.")
     
 with tab2:
 
-    st.header("Images d'entrée")
+    st.subheader("Images d'entrée")
     c1, c2 = st.columns(2)
     c1.metric("Résolution", "360 × 360")
     c2.metric("Format", "RGB · float32")
 
     st.divider()
 
-    st.header("🔄 Data Augmentation")
-    st.caption("Appliquée uniquement sur le jeu d'entraînement "
-                "pour améliorer la généralisation.")
+    st.subheader("Data Augmentation")
+    st.caption("Augmentation des images du jeu d'entraînement pour améliorer la capacité de généralisation des modèles")
     st.dataframe(
         pd.DataFrame({
             "Transformation": ["RandomFlip", "RandomRotation"],
@@ -254,9 +252,8 @@ with tab2:
 
     st.divider()
 
-    st.header("📐 Normalisation des images")
-    st.caption("Normalisation spécifique à chaque architecture, "
-                "reproduisant celle appliquée lors du pré-entraînement sur ImageNet.")
+    st.subheader("Normalisation des images")
+    st.caption("Normalisation des images spécifique à chaque architecture, correspondant à celle appliquée lors du pré-entraînement sur ImageNet.")
     st.dataframe(
         pd.DataFrame({
             "Architecture" : ["EfficientNetV2S/M", "ResNet50V2", "DenseNet121", "VGG19", "Xception"],

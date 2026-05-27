@@ -95,7 +95,7 @@ tab1,tab2, tab3 = st.tabs([
 
 with tab1:
 
-    st.subheader("⚡ Classifieurs")
+    st.subheader("Classifieurs")
 
 
     st.markdown("""
@@ -119,9 +119,7 @@ with tab1:
 
     st.divider()
 
-    st.subheader("🎯 Performances")
-
-    vspace(10)
+    st.subheader("Performances")
 
     st.markdown("""
     <div style="display:flex; gap:16px; align-items:stretch; margin-bottom:1rem;">
@@ -178,7 +176,7 @@ with tab1:
         st.caption("La CV5 n'a pas été appliquée aux modèles DL en raison du coût computationnel.")
     st.divider()
 
-    st.subheader("🔍 Interprétabilité — SHAP par classe")
+    st.subheader("Interprétabilité — SHAP par classe")
     st.caption("Top 10 des features contribuant à la classification de chaque type cellulaire.")
 
     st.write("La figure ci-dessous représente les couleurs des centres des clusters K-Means triés par luminosité décroissante — du violet foncé (cluster 1) au beige clair (cluster 13).")
@@ -233,7 +231,7 @@ with tab1:
 
 with tab2:
 
-    st.subheader("⚡ Architectures")
+    st.subheader("Architectures")
 
     st.markdown("""
     Tous les modèles DL utilisent le **Transfer Learning** : pré-entraînés sur ImageNet,
@@ -267,9 +265,7 @@ with tab2:
 
     st.divider()
 
-    st.subheader("🎯 Performances")
-
-    vspace(10)
+    st.subheader("Performances")
 
     st.markdown("""
     <div style="display:flex; gap:16px; align-items:stretch; margin-bottom:1rem;">
@@ -289,7 +285,7 @@ with tab2:
     </div>
     """, unsafe_allow_html=True)
 
-    model_name = ["EfficientNetV2S", "EfficientNetV2M", "ResNet50V2", "DenseNet121", "VGG19", "Xception", "Ensemble (EffV2S + VGG19 + Xception)"]
+    model_name = ["EfficientNetV2S", "EfficientNetV2M", "ResNet50V2", "DenseNet121", "VGG19", "Xception", "Ensemble (EfficientNetV2S + VGG19 + ResNet50V2 + Xception)"]
 
     vspace(10)
 
@@ -315,9 +311,15 @@ with tab2:
         path_cm = f"{RESULTS_DIR}/cm/confusion_matrix_{MODEL_MAP.get(selected_dl)}.png"
         st.image(Image.open(path_cm), width="stretch")
 
-    vspace(30)
+    st.caption("Résultats obtenus sur la même base de test que l'approche ML (base d'entraînement : 60%, validation : 20%, test : 20%).")
 
-    if selected_dl != "Ensemble (EffV2S + VGG19 + Xception)":
+    st.divider()
+
+    st.subheader("Courbes d'apprentissage")
+
+    if selected_dl == "Ensemble (EfficientNetV2S + VGG19 + ResNet50V2 + Xception)":
+        st.write("Le modèle Ensemble ne dispose pas de courbes d'apprentissage propre, car ses prédictions résultent d'un vote par moyenne pondérée des probabilités (soft voting) des modèles qui le composent, et non d'un entraînement indépendant.")
+    if selected_dl != "Ensemble (EfficientNetV2S + VGG19 + ResNet50V2 + Xception)":
         history_path = f"{RESULTS_DIR}/history/history_{MODEL_MAP.get(selected_dl)}.jsonl"
         history_dict = read(history_path)
         loss_fig, acc_fig = plot_history(history_dict)
@@ -333,13 +335,11 @@ with tab2:
             st.markdown("<div style='text-align: center;'><b>Accuracy</b></div>", unsafe_allow_html=True)
             st.pyplot(acc_fig, use_container_width=True)
 
-    st.caption("Résultats obtenus sur la même base de test que l'approche ML (base d'entraînement : 60%, validation : 20%, test : 20%).")
 
 with tab3:
 
-    st.subheader("⚖️ Comparaison des performances")
+    st.subheader("Comparaison des performances")
 
-    vspace(20)
 
     col1, col2 = st.columns([1,1.5])
 
@@ -391,9 +391,7 @@ with tab3:
     st.caption("Ensemble : EfficientNetV2S + VGG19 + ResNet50V2 + Xception · vote soft")
     st.divider()
 
-    st.subheader("⏱️ Temps computationnels")
-
-    vspace(20)
+    st.subheader("Temps computationnels")
 
     df_temps = pd.DataFrame({
         "": ["Training", "Inférence/image"],

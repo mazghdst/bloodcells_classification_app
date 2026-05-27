@@ -10,7 +10,7 @@ st.title("💡 Conclusion")
 
 st.divider()
 
-st.markdown("### ✅ Principaux résultats")
+st.markdown("### Principaux résultats")
 st.markdown("""
 - Le pipeline ML — extraction de features via K-Means L\\*a\\*b\\*, GLCM et Sobel — offre une classification **rapide sur CPU** dont chaque prédiction peut être **expliquée** et **justifiée** via SHAP
 - Le Voting Classifier atteint **98,24% d'accuracy**, confirmant la pertinence des **features colorimétriques et texturales** extraites pour cette tâche de classification
@@ -20,7 +20,7 @@ st.markdown("""
 
 vspace(20)
 
-st.markdown("### ⚠️ Limites")
+st.markdown("### Limites")
 st.markdown("""
 - Les classes morphologiquement proches restent les plus difficiles à séparer — IG, Monocyte et Neutrophile — visible sur l'UMAP et les matrices de confusion
 - Les deux approches sont entraînées et évaluées sur le dataset PBC uniquement, ce qui limite la généralisation à d'autres protocoles de coloration ou équipements
@@ -30,7 +30,7 @@ st.markdown("""
 
 vspace(20)
 
-st.markdown("### 🚀 Perspectives")
+st.markdown("### Perspectives")
 st.markdown("""
 - Tester la robustesse des deux approches sur d'autres datasets de microscopie hématologique, notamment avec des variations de coloration ou d'équipement d'acquisition
 - Valider les modèles DL par validation croisée pour une comparaison rigoureuse avec l'approche ML

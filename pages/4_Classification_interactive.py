@@ -132,16 +132,17 @@ for k,v in defaults.items():
         st.session_state[k]=v
 
 tab1,tab2,tab3 = st.tabs([
-    "Prédiction",
+    "Classification d'une image",
     "Comparaison des modèles",
-    "Analyse des erreurs"
+    "Visualisation des erreurs"
 ])     
 
 
 # =========================================================================================================
 with tab1:  
-    st.header("⚗️ Évaluation à partir d'un modèle")
+    st.subheader("Classification d'une image")
     
+    st.caption("Classification d'une image de cellule sanguine à partir d'un modèle de machine learning ou de deep learning.")
     demo_approche = st.radio(
         "Approche",
         ["Machine Learning", "Deep Learning"],
@@ -152,14 +153,14 @@ with tab1:
     if demo_approche == "Machine Learning":
         demo_model = st.selectbox("Modèle", ["SVM", "XGBoost", "Voting Classifier"],
         index=None,
-        placeholder="Choisissez un modèle")
+        placeholder="Selectionnez un modèle")
     else:
         demo_model = st.selectbox("Modèle", [
             "EfficientNetV2S", "EfficientNetV2M", "ResNet50V2",
             "DenseNet121", "VGG19", "Xception"
         ],
         index=None,
-        placeholder="Choisissez un modèle")
+        placeholder="Selectionnez un modèle")
 
 
     demo_source = st.radio(
@@ -179,7 +180,7 @@ with tab1:
         ], 
         key="demo_categorie",
         index=None,
-        placeholder="Choisissez une catégorie de cellule")
+        placeholder="Selectionnez une catégorie de cellule")
 
         if (
             st.session_state.get("demo_categorie_courante") != demo_categorie
@@ -309,7 +310,9 @@ with tab1:
 # =========================================================================================================
 with tab2:  
 
-    st.header("⚡ Comparaison entre modèles")     
+    st.subheader("Comparaison des modèles")    
+
+    st.caption("Comparaison des résultats de classification de l'ensemble des modèles de machine learning et de deep learning à partir d'une image.") 
 
     compare_categorie = st.selectbox("Catégorie", [
             "Basophile", "Éosinophile", "Érythroblaste", "IG",
@@ -317,7 +320,7 @@ with tab2:
         ], 
         key="compare_categorie",
         index=None, 
-        placeholder="Choisissez une catégorie de cellule")
+        placeholder="Selectionnez une catégorie de cellule")
 
     if (
         st.session_state.get("compare_categorie_courante") != compare_categorie
@@ -448,14 +451,14 @@ with tab2:
 # =========================================================================================================
 with tab3:  
 
-    st.header("🔬 Visualisation des erreurs")  
-    st.caption("Analyse des erreurs des 3 modèles les plus performants : EfficientNetV2S, EfficientNetV2M et VGG19. Nombre d'erreurs relevé sur la base de test comptabilisant 3 415 images.")   
-    errors_model = st.selectbox("Erreurs modèle", [
+    st.subheader("Visualisation des erreurs")  
+    st.caption("Visualisation des erreurs de classification des 3 modèles de deep learning les plus performants : EfficientNetV2S, EfficientNetV2M et VGG19.")   
+    errors_model = st.selectbox("Modèle", [
             "EfficientNetV2S", "EfficientNetV2M", "VGG19"
         ], 
         key="errors_models",
         index=None,
-        placeholder="Choisissez un modèle")
+        placeholder="Selectionnez un modèle")
 
         
 
@@ -515,7 +518,7 @@ with tab3:
                 "EfficientNetV2M": 37,
                 "VGG19": 35,
             }
-            st.caption(f"Nombre total d'erreurs : {nb_errors_dic[errors_model]}")
+            st.caption(f"Nombre total d'erreurs : {nb_errors_dic[errors_model]} / 3 415 images.")
             gradcam_image = st.session_state.errors_selected_image   
             image_classe = st.session_state.true_class                   
 

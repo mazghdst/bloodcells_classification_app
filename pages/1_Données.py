@@ -55,7 +55,7 @@ st.divider()
  
 # ── Dataset ──────────────────────────────────────────────────────────────────
  
-st.header("Dataset PBC — Peripheral Blood Cells")
+st.subheader("Dataset PBC — Peripheral Blood Cells")
 st.write("""
 Le dataset PBC (Peripheral Blood Cells) est un dataset public de microscopie
 hématologique composé d'images de **cellules sanguines** périphériques acquises
@@ -78,7 +78,7 @@ st.divider()
  
 # ── Classes cellulaires ───────────────────────────────────────────────────────
  
-st.header("Classes cellulaires")
+st.subheader("Classes cellulaires")
 st.caption(
     "Ce jeu de données regroupe 8 types de cellules sanguines observées sur des frottis microscopiques. "
     "Chaque catégorie possède des caractéristiques morphologiques spécifiques que les modèles devront apprendre à distinguer."
@@ -113,9 +113,9 @@ st.divider()
  
 # ── Exemples d'images ─────────────────────────────────────────────────────────
  
-st.header("Exemples d'images")
+st.subheader("Exemples d'images")
  
-selected = st.selectbox("Choisir une classe", CLASSES_FR)
+selected = st.selectbox("Catégorie", CLASSES_FR)
 imgs = get_images_of_class(selected, 5)
  
 if st.button("🎲 Afficher d'autres exemples"):
@@ -130,7 +130,7 @@ st.divider()
  
 # ── Qualité ───────────────────────────────────────────────────────────────────
  
-st.header("Qualité des images et limites")
+st.subheader("Qualité des images et limites")
 st.write("""
 Les images du dataset PBC présentent globalement une bonne qualité :
 - images nettes
