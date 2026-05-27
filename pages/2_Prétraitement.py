@@ -53,7 +53,7 @@ with tab1:
             <div style="background:#f8f8f8; border-radius:10px; padding:14px 20px; text-align:center; flex:1;">
                 <div style="font-size:15px;">🟠</div>
                 <div style="font-weight:600; margin:4px 0;">K-Means</div>
-                <div style="font-size:12px; color:#888;">k = 13 clusters</div>
+                <div style="font-size:12px; color:#888;">k = 8 clusters</div>
             </div>
             <div style="font-size:20px; color:#ccc;">→</div>
             <div style="background:#f8f8f8; border-radius:10px; padding:14px 20px; text-align:center; flex:1;">
@@ -70,29 +70,27 @@ with tab1:
 
     df = pd.DataFrame({
         "Catégorie" : ["K-Means", "K-Means", "K-Means", "K-Means",
-                        "Global", "Global",
+                        "Global", 
                         "Texture", "Texture"],
             "Feature"   : [
                 "Histogrammes clusters",
                 "Moyennes intra-clusters",
                 "Écart-types intra-clusters",
                 "Histogrammes radiaux",
-                "Contraste",
                 "Statistiques globales",
                 "GLCM",
                 "Sobel",
             ],
             "Description": [
-                "Distribution globale des 13 clusters",
+                "Distribution globale des 8 clusters",
                 "Moyenne par cluster sur L*, a* et b*",
                 "Écart-type par cluster sur L*, a* et b*",
-                "4 anneaux concentriques × 13 clusters",
-                "Moyenne et écart-type",
+                "4 anneaux concentriques × 8 clusters",
                 "Moyenne et écart-type sur L*, a* et b*",
                 "Contraste, homogénéité et énergie",
                 "Moyenne et écart-type de la magnitude du gradient ",
             ],
-        "Dimension":[13, 39, 39, 52, 2, 6, 3, 2]
+        "Dimension":[8, 24, 24, 32, 6, 3, 2]
     })
 
     st.dataframe(
@@ -101,7 +99,7 @@ with tab1:
         hide_index=True,
     )
 
-    st.metric("Dimension totale", "156")
+    st.metric("Dimension totale", "99")
 
     st.caption("Dimension initiale : 128 × 128 × 3 = 49 152, rendant la classification directe difficile sur CPU.")
 
@@ -127,7 +125,7 @@ with tab1:
 
     with col2:
 
-        img = Image.open(f"{FIGURES_DIR}/kmeans_radii2.png").convert("RGB")
+        img = Image.open(f"{FIGURES_DIR}/kmeans_radii.png").convert("RGB")
         st.image(img, width="stretch")
         st.caption("Schématisation sur une image segmentée par K-Means. Les couleurs correspondent aux centres des clusters.")
 
@@ -137,7 +135,7 @@ with tab1:
 
     st.subheader("UMAP — projection des features")
 
-    st.write("Projection UMAP des images à partir des 156 features extraites par le pipeline ML, réduite à 2 composantes. Chaque point représente une image, coloré selon sa classe cellulaire.")
+    st.write("Projection UMAP des images à partir des 99 features extraites par le pipeline ML, réduite à 2 composantes. Chaque point représente une image, coloré selon sa classe cellulaire.")
 
     df_umap = load_umap(UMAP_CSV)
     classes = sorted(df_umap["label"].unique())

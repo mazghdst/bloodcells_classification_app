@@ -130,11 +130,11 @@ with tab1:
         </div>
         <div style="background:#f8f8f8; border-radius:10px; padding:16px 24px; flex:1;">
             <div style="font-size:13px; color:#888;">Accuracy</div>
-            <div style="font-size:28px; font-weight:500; margin:8px 0;">98.24%</div>
+            <div style="font-size:28px; font-weight:500; margin:8px 0;">98.45%</div>
         </div>
         <div style="background:#f8f8f8; border-radius:10px; padding:16px 24px; flex:1;">
             <div style="font-size:13px; color:#888;">F1 macro</div>
-            <div style="font-size:28px; font-weight:500; margin:8px 0;">98.37%</div>
+            <div style="font-size:28px; font-weight:500; margin:8px 0;">98.52%</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
