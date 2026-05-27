@@ -205,7 +205,7 @@ with tab1:
     "qui regroupe plusieurs stades de maturation. Reconnu par sa grande taille (cluster 9 faible) et la variabilité "
     "de luminosité dans son noyau irrégulier (Intra std 1 L), absent chez les cellules matures.",
     
-    "Lymphocyte": "L'absence de pixels violet du cluster 2 au centre de l'image (r1 hist 2 bas) et l'absence de teintes orangées (cluster 7) "
+    "Lymphocyte": "L'absence de pixels violet du cluster 2 au centre de l'image (r1 hist 2 bas) le distingue du basophile. L'absence de teintes orangées (cluster 7) "
     "le distingue de l'éosinophile.",
     
     "Monocyte": "Reconnu par sa très grande taille avec la plus faible proportion de fond du dataset (cluster 9 très bas). "
