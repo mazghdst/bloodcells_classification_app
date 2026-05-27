@@ -79,7 +79,7 @@ st.divider()
 # ── Classes cellulaires ───────────────────────────────────────────────────────
  
 st.subheader("Classes cellulaires")
-st.caption(
+st.write(
     "Ce jeu de données regroupe 8 types de cellules sanguines observées sur des frottis microscopiques. "
     "Chaque catégorie possède des caractéristiques morphologiques spécifiques que les modèles devront apprendre à distinguer."
 )
