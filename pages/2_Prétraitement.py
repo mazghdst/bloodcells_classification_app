@@ -228,8 +228,9 @@ with tab1:
 
         st.plotly_chart(fig_umap)
 
-    vspace(5)
-    st.caption("La projection UMAP montre que les features extraites sont globalement discriminantes, avec des clusters bien séparés pour la majorité des classes. Cependant, certaines classes présentent un chevauchement partiel, correspondant aux catégories de cellules les plus proches morphologiquement.")
+    vspace(20)
+
+    st.caption("Cette projection montre que les features extraites sont globalement discriminantes, avec des clusters bien séparés pour la majorité des classes. Cependant, certaines classes présentent un chevauchement partiel, correspondant aux catégories de cellules les plus proches morphologiquement.")
     
 with tab2:
 
