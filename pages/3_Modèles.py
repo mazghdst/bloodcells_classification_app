@@ -99,17 +99,18 @@ with tab1:
 
 
     st.markdown("""
-    Les classifieurs reçoivent en entrée le **vecteur de 156 features** extrait par le pipeline K-Means.
+    Les classifieurs reçoivent en entrée le **vecteur de 99 features** extrait par le pipeline K-Means.
     """)
 
     st.dataframe(
         pd.DataFrame({
-            "Classifieur"     : ["SVM", "XGBoost", "Voting Classifier"],
-            "Nom complet": ["Support Vector Machine", "Extreme Gradient Boosting", "Ensemble par vote"],
-            "Détail"     : ["Kernel RBF", "Arbres en séquence", "SVM + XGBoost · vote soft"],
+            "Classifieur"     : ["SVM", "XGBoost", "LGBM", "Voting Classifier"],
+            "Nom complet": ["Support Vector Machine", "Extreme Gradient Boosting", "Light Gradient Boosting Machine", "Ensemble par vote"],
+            "Détail"     : ["Kernel RBF", "Arbres en séquence", "Arbres en parallèle", "Vote soft ou hard"],
             "Particularité": [
                 "Séparation par hyperplan en grande dimension",
                 "Chaque arbre corrige les erreurs du précédent",
+                "Plus rapide que XGBoost, optimisé feuille par feuille",
                 "Réduit la variance par combinaison des modèles",
             ],
         }),
@@ -126,7 +127,7 @@ with tab1:
         <div style="background:#f8f8f8; border-radius:10px; padding:16px 24px; flex:2;">
             <div style="font-size:13px; color:#888;">🏆 Meilleur modèle ML</div>
             <div style="font-size:28px; font-weight:500; margin:8px 0;">Voting Classifier</div>
-            <div style="font-size:13px; color:#888;">SVM + XGBoost</div>
+            <div style="font-size:13px; color:#888;">SVM + XGBoost · vote soft</div>
         </div>
         <div style="background:#f8f8f8; border-radius:10px; padding:16px 24px; flex:1;">
             <div style="font-size:13px; color:#888;">Accuracy</div>
@@ -140,7 +141,7 @@ with tab1:
     """, unsafe_allow_html=True)
 
 
-    classifiers_name = ["SVM", "XGBoost", "Voting Classifier"]
+    classifiers_name = ["SVM", "XGBoost", "LGBM", "Voting Classifier"]
 
     vspace(10)
     selected_ml = st.selectbox("Sélectionner un classifieur", classifiers_name,
@@ -166,11 +167,11 @@ with tab1:
         st.image(Image.open(path_cm), width="stretch")
 
     st.caption("Métriques obtenues sur la base de test (base d'entraînement : 80%, test 20%).")
-    with st.expander("Résultats Validation Croisée 5-Fold (ML uniquement)"):
+    with st.expander("Résultats Validation Croisée 5-Fold (CV5)"):
         data_cv5 = {
-            "Modèle": ["SVM", "XGBoost", "Voting Classifier"],
-            "Accuracy": ["97.61% ± 0.30", "97.61% ± 0.31", "98.13% ± 0.29"],
-            "F1 macro": ["97.62% ± 0.37", "97.64% ± 0.33", "98.24% ± 0.31"],
+            "Modèle": ["SVM", "XGBoost", "LGBM", "Voting Classifier"],
+            "Accuracy (%)": ["97.87 ± 0.39", "97.66 ± 0.22", "97.83 ± 0.24", "98.13 ± 0.29"],
+            "F1 macro (%)": ["97.62 ± 0.37", "97.66 ± 0.30", "97.89 ± 0.29", "98.24 ± 0.31"],
         }
         st.dataframe(data_cv5)
         st.caption("La CV5 n'a pas été appliquée aux modèles DL en raison du coût computationnel.")
@@ -180,7 +181,7 @@ with tab1:
     st.caption("Top 10 des features contribuant à la classification de chaque type cellulaire.")
 
     st.write("La figure ci-dessous représente les couleurs des centres des clusters K-Means triés par luminosité décroissante.")
-    cols = st.columns([0.5, 2, 0.5])
+    cols = st.columns([0.8, 2, 1])
     with cols[1]:
         st.image("images/figures/cluster_colors.png", width=700)
 
@@ -345,12 +346,12 @@ with tab3:
 
     with col1:
         df_scores = pd.DataFrame({
-            "Approche": ["ML", "ML", "ML", "DL", "DL", "DL", "DL", "DL", "DL", "DL"],
-            "Modèle": ["SVM", "XGBoost", "Voting Classifier", 
+            "Approche": ["ML", "ML", "ML", "ML", "DL", "DL", "DL", "DL", "DL", "DL", "DL"],
+            "Modèle": ["SVM", "XGBoost", "LGBM", "Voting Classifier", 
                         "EfficientNetV2S", "EfficientNetV2M", "DenseNet121", 
                         "ResNet50V2", "VGG19", "Xception", "Ensemble"],
-            "Accuracy (%)": [97.57, 97.72, 98.24, 98.97, 98.92, 98.89, 98.77, 98.97, 98.45, 99.21],  
-            "F1 macro (%)": [97.67, 97.72, 98.37, 99.02, 98.95, 98.90, 98.87, 99.03, 98.56, 99.24],      
+            "Accuracy (%)": [97.57, 97.72, 98.21, 98.45, 98.97, 98.92, 98.89, 98.77, 98.97, 98.45, 99.21],  
+            "F1 macro (%)": [97.67, 97.72, 98.31, 98.52, 99.02, 98.95, 98.90, 98.87, 99.03, 98.56, 99.24],      
         })
 
         st.dataframe(df_scores[["Modèle", "Accuracy (%)", "F1 macro (%)"]], use_container_width=True, hide_index=True)
@@ -395,7 +396,7 @@ with tab3:
 
     df_temps = pd.DataFrame({
         "": ["Training", "Inférence/image"],
-        "ML (CPU)": ["~ 1 min", "~ 4 ms"],  # à compléter
+        "ML (CPU)": ["~ 1 min", "~ 4 ms"], 
         "DL (GPU)": ["1h – 3h", "10 - 25  ms (batch 32)"],
     })
 

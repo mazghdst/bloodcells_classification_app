@@ -27,51 +27,61 @@ tab1,tab2 = st.tabs([
     "Pipeline DL",
 ])
 
+
 with tab1:
     st.subheader("Extraction de caractéristiques")
 
-    st.markdown("Le pipeline de machine learning transforme chaque image brute en un **vecteur de 156 features**.")
+    st.markdown("Le pipeline de machine learning transforme chaque image en un **vecteur de 99 features**.")
 
-    col1, col2, col3 = st.columns([0.01,1,0.01])
-
-    with col2:
-
-        st.markdown("""
-        <div style="display:flex; align-items:center; gap:8px; margin:20px 0;">
-            <div style="background:#f8f8f8; border-radius:10px; padding:14px 20px; text-align:center; flex:1;">
-                <div style="font-size:20px;">🔬</div>
-                <div style="font-weight:600; margin:4px 0;">Images RGB</div>
-                <div style="font-size:12px; color:#888;">128 × 128</div>
-            </div>
-            <div style="font-size:20px; color:#ccc;">→</div>
-            <div style="background:#f8f8f8; border-radius:10px; padding:14px 20px; text-align:center; flex:1;">
-                <div style="font-size:20px;">🎨</div>
-                <div style="font-weight:600; margin:4px 0;">Espace L*a*b*</div>
-                <div style="font-size:12px; color:#888;">conversion</div>
-            </div>
-            <div style="font-size:20px; color:#ccc;">→</div>
-            <div style="background:#f8f8f8; border-radius:10px; padding:14px 20px; text-align:center; flex:1;">
-                <div style="font-size:15px;">🟠</div>
-                <div style="font-weight:600; margin:4px 0;">K-Means</div>
-                <div style="font-size:12px; color:#888;">k = 8 clusters</div>
-            </div>
-            <div style="font-size:20px; color:#ccc;">→</div>
-            <div style="background:#f8f8f8; border-radius:10px; padding:14px 20px; text-align:center; flex:1;">
-                <div style="font-size:20px;">📐</div>
-                <div style="font-weight:600; margin:4px 0;">Extraction</div>
-                <div style="font-size:12px; color:#888;">156 features</div>
-            </div>
+    st.markdown("""
+    <div style="display:flex; align-items:center; gap:8px; margin:20px 0;">
+        <div style="background:#f8f8f8; border-radius:10px; padding:14px 20px; text-align:center; flex:1;">
+            <div style="font-size:20px;">🔬</div>
+            <div style="font-weight:600; margin:4px 0;">Images RGB</div>
+            <div style="font-size:12px; color:#888;">360 × 363</div>
         </div>
-        """, unsafe_allow_html=True)
+        <div style="font-size:20px; color:#ccc;">→</div>
+        <div style="background:#f8f8f8; border-radius:10px; padding:14px 20px; text-align:center; flex:1;">
+            <div style="font-size:20px;">✂️</div>
+            <div style="font-weight:600; margin:4px 0;">Crop</div>
+            <div style="font-size:12px; color:#888;">150 × 150</div>
+        </div>
+        <div style="font-size:20px; color:#ccc;">→</div>
+        <div style="background:#f8f8f8; border-radius:10px; padding:14px 20px; text-align:center; flex:1;">
+            <div style="font-size:20px;">🎨</div>
+            <div style="font-weight:600; margin:4px 0;">Espace L*a*b*</div>
+            <div style="font-size:12px; color:#888;">conversion</div>
+        </div>
+        <div style="font-size:20px; color:#ccc;">→</div>
+        <div style="background:#f8f8f8; border-radius:10px; padding:14px 20px; text-align:center; flex:1;">
+            <div style="font-size:15px;">🟠</div>
+            <div style="font-weight:600; margin:4px 0;">K-Means</div>
+            <div style="font-size:12px; color:#888;">k = 8 clusters</div>
+        </div>
+        <div style="font-size:20px; color:#ccc;">→</div>
+        <div style="background:#f8f8f8; border-radius:10px; padding:14px 20px; text-align:center; flex:1;">
+            <div style="font-size:20px;">📐</div>
+            <div style="font-weight:600; margin:4px 0;">Extraction</div>
+            <div style="font-size:12px; color:#888;">99 features</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     st.divider()
 
     st.subheader("Composition du vecteur de features")
 
+
     df = pd.DataFrame({
-        "Catégorie" : ["K-Means", "K-Means", "K-Means", "K-Means",
-                        "Global", 
-                        "Texture", "Texture"],
+            "Catégorie": [
+                "K-Means",
+                "K-Means",
+                "K-Means",
+                "K-Means",
+                "Global",
+                "Texture",
+                "Texture",
+            ],
             "Feature"   : [
                 "Histogrammes clusters",
                 "Moyennes intra-clusters",
@@ -98,37 +108,17 @@ with tab1:
         use_container_width=True,
         hide_index=True,
     )
-
     st.metric("Dimension totale", "99")
+    # with col2:
+    #     img = Image.open(f"{FIGURES_DIR}/kmeans_radii.png").convert("RGB")
+    #     st.image(img, width="stretch")
+        
+    #     col11, col12, col13 = st.columns([0.1, 1, 0.1])
+    #     with col12:
+    #         st.caption("Segmentation par K-Means. Les couleurs correspondent aux centres des 8 clusters.")
 
-    st.caption("Dimension initiale : 128 × 128 × 3 = 49 152, rendant la classification directe difficile sur CPU.")
-
-    st.divider()
-
-    col1, col2 = st.columns([1.5, 0.8], vertical_alignment="center")
-
-    with col1:
-
-        st.subheader("Histogrammes radiaux")
-        st.write(
-            """
-            Chaque image est divisée en **4 anneaux concentriques**
-            centrés sur l'image.
-
-            Dans chaque anneau, on calcule l'histogramme
-            des labels des clusters K-Means
-
-            ➡️ **Capture la distribution spatiale : noyau vs cytoplasme vs fond**
-
-            """
-        )
-
-    with col2:
-
-        img = Image.open(f"{FIGURES_DIR}/kmeans_radii.png").convert("RGB")
-        st.image(img, width="stretch")
-        st.caption("Schématisation sur une image segmentée par K-Means. Les couleurs correspondent aux centres des clusters.")
-
+    
+    st.caption("Dimension initiale : 150 × 150 × 3 = 67 500, rendant la classification directe difficile sur CPU.")
 
     st.divider()
 

@@ -51,7 +51,7 @@ with col1:
         <div style="font-size:16px; color:#555;">✓ Réduction de dimensions</div>
         <br>
         <div class="section-label">Modèles</div>
-        <div style="font-size:16px; color:#555;">SVM · XGBoost · Voting Classifier</div>    </div>
+        <div style="font-size:16px; color:#555;">SVM · XGBoost · LGBM · Voting Classifier</div> </div>
     """, unsafe_allow_html=True)
  
 with col2:

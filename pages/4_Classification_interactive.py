@@ -4,6 +4,7 @@ import os
 # Third-party libraries
 import joblib
 import random
+import cv2
 import numpy as np
 import pandas as pd
 from PIL import Image
@@ -76,6 +77,14 @@ def get_missclassified_img(model_name):
     return imgs, imgs_classe 
 
 
+def preprocess_image(img):
+    w, h = img.size
+    cx, cy = w // 2, h // 2
+    half = cx // 2
+    img_cropped = img.crop((cx-half, cy-half, cx+half, cy+half)) 
+    img_resized = img_cropped.resize(IMG_SIZE_ML)
+    return img_resized
+
 def get_images_of_class(cls, n=5):
     paths = glob(f"{SAMPLE_DIR}/{cls}/*")
     imgs = []
@@ -87,6 +96,7 @@ def get_images_of_class(cls, n=5):
 
 
 def predict_dl(model, img):
+
     img = np.expand_dims(img, axis=0)
 
     probs = model(img, training=False)[0].numpy()
@@ -96,8 +106,9 @@ def predict_dl(model, img):
     return probs, label
 
 def predict_ml(model, img):
-    img = img.resize(IMG_SIZE_ML)
-    img = np.array(img).reshape(1, -1)
+
+    img_resized = preprocess_image(img)
+    img = np.array(img_resized).reshape(1, -1)
 
     y_pred = model.predict(img)[0]
     probs = model.predict_proba(img)[0]
@@ -150,7 +161,7 @@ with tab1:
     )
 
     if demo_approche == "Machine Learning":
-        demo_model = st.selectbox("Modèle", ["SVM", "XGBoost", "Voting Classifier"],
+        demo_model = st.selectbox("Modèle", ["SVM", "XGBoost", "LGBM", "Voting Classifier"],
         index=None,
         placeholder="Selectionnez un modèle")
     else:
@@ -311,7 +322,7 @@ with tab2:
 
     st.subheader("Comparaison des modèles")    
 
-    st.caption("Comparaison des résultats de classification de l'ensemble des modèles de machine learning et de deep learning à partir d'une image.") 
+    st.caption("Comparaison des résultats de classification de l'ensemble des modèles seuls de machine learning et de deep learning à partir d'une image.") 
 
     compare_categorie = st.selectbox("Catégorie", [
             "Basophile", "Éosinophile", "Érythroblaste", "IG",
@@ -367,7 +378,7 @@ with tab2:
         with st.spinner("Analyse en cours..."):
 
             models = {
-                name: load_ml_model(name) for name in ML_PATH_MAP
+                name: load_ml_model(name) for name in ["SVM", "XGBoost", "LGBM"]
             }
             model_names = list(models.keys())
 
