@@ -8,7 +8,7 @@ def vspace(height):
     )
 
 IMG_SIZE_DL = (360, 360)
-IMG_SIZE_ML = (128, 128)
+IMG_SIZE_ML = (150, 150)
 
 # --- Languages dic  ---
 CLASSES_EN = [
@@ -73,6 +73,7 @@ QUALITY_IMAGES = {
 ML_PATH_MAP = {
     "SVM": f"{ML_MODELS_DIR}/svm.pkl",
     "XGBoost": f"{ML_MODELS_DIR}/xgb.pkl",
+    "LGBM": f"{ML_MODELS_DIR}/lgbm.pkl",
     "Voting Classifier": f"{ML_MODELS_DIR}/voting.pkl",
 }
 
@@ -89,6 +90,7 @@ DL_PATH_MAP = {
 CLASSIFIER_MAP = {
     "SVM"              : "svm",
     "XGBoost"          : "xgb",
+    "LGBM"             : "lgbm",
     "Voting Classifier" : "voting",
 }
 
@@ -99,7 +101,7 @@ MODEL_MAP = {
     "DenseNet121"    : "densenet121",
     "VGG19"          : "vgg19",
     "Xception"       : "xception",
-    "Ensemble (EffV2S + VGG19 + Xception)" : "ensemble"
+    "Ensemble (EfficientNetV2S + VGG19 + ResNet50V2 + Xception)" : "ensemble"
 }
 
 # --- Grad-CAM ---
@@ -123,7 +125,7 @@ TARGET_LAYER_MAP = {
     "mobilenetv2": "Conv_1", 
     "efficientnetv2s": "top_activation",
     "efficientnetv2m": "top_activation",
-    "resnet50v2": "conv5_block3_out",
+    "resnet50v2": "conv5_block2_out",
     "densenet121": "relu",
     "vgg19": "block5_conv4",
     "xception": "block14_sepconv2_act",
