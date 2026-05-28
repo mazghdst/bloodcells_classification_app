@@ -246,6 +246,8 @@ with tab1:
 
     st.write("La figure ci-dessous donne un aperçu des proportions moyennes obtenues pour chaque cluster. Chaque type de cellule a une signature colorimétrique spécifique à sa morphologie. La couleur de chaque carré correspond à la couleur du centre du cluster, convertie en RGB.")
 
+    vspace(10)
+    
     col1, col2 = st.columns([1, 0.05])
     with col1:
         fig = plot_hist()
