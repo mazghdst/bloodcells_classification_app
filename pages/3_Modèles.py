@@ -2,6 +2,9 @@ import streamlit as st
 from PIL import Image
 import pandas as pd
 import json
+import numpy as np
+import cv2
+import matplotlib.patches as patches
 from collections import defaultdict
 import matplotlib.pyplot as plt
 import plotly.express as px
@@ -40,6 +43,67 @@ def load_report(path):
                 })
  
     return pd.DataFrame(rows_classes), pd.DataFrame(rows_global)
+
+
+@st.cache_data
+def load_kmeans_features():
+    df = pd.read_csv(f"./files/kmeans_features.csv")
+    clusters = pd.read_csv(f"./files/kmeans_cluster_centers.csv")
+
+    return df, clusters
+
+def plot_hist():
+
+    df, clusters = load_kmeans_features()
+    fig, axes = plt.subplots(2, 4, figsize=(12, 6))
+
+    y = df["target"].astype("int").to_numpy()
+
+    historams = df[[col for col in df.columns if col.startswith("Hist")]]
+    class_names = ["BA", "EO", "ERB", "IG", "LY", "MO", "SNE", "PLT"]
+
+    X = historams.to_numpy()
+    classes = np.unique(y)
+    n_clusters = X.shape[1]
+    X = X**2
+
+    class_means = np.array([X[y == c].mean(axis=0) for c in classes])
+    i = 0
+    for k in range(n_clusters):
+
+        lab = clusters.iloc[k].to_numpy().astype(np.uint8)
+
+        lab_img = lab.reshape(1, 1, 3)
+        rgb = cv2.cvtColor(lab_img, cv2.COLOR_LAB2RGB).reshape(
+            3,
+        )
+        rgb = rgb / 255.0 
+
+        ax = axes[i // 4, i % 4]
+        i += 1
+
+        values = class_means[:, k]
+        ax.bar(
+            classes, values, color="#A6A6A6", alpha=0.6, edgecolor="#6E6E6E", linewidth=0.8
+        )
+
+        ax.set_title(f"Cluster {k+1}")
+        ax.set_xticks(classes)
+        ax.set_xticklabels(class_names, rotation=45, fontsize=9)
+
+        if k < 4:
+            rect = patches.Rectangle(
+                (0.8, 0.8), 0.15, 0.15, transform=ax.transAxes, color=rgb, clip_on=False
+            )
+        else:
+            rect = patches.Rectangle(
+                (0.05, 0.8), 0.15, 0.15, transform=ax.transAxes, color=rgb, clip_on=False
+            )
+
+        ax.add_patch(rect)
+
+    plt.tight_layout()
+    return fig
 
 def plot_history(history_dict):
 
@@ -177,57 +241,26 @@ with tab1:
         st.caption("La CV5 n'a pas été appliquée aux modèles DL en raison du coût computationnel.")
     st.divider()
 
-    st.subheader("Interprétabilité — SHAP par classe")
-    st.caption("Top 10 des features contribuant à la classification de chaque type cellulaire.")
+    st.subheader("Interprétabilité - K-Means")
 
-    st.write("La figure ci-dessous représente les couleurs des centres des clusters K-Means triés par luminosité décroissante.")
-    cols = st.columns([0.8, 2, 1])
-    with cols[1]:
-        st.image("images/figures/cluster_colors.png", width=700)
+    st.write("La figure ci-dessous donne un aperçu des proportions moyennes obtenues pour chaque cluster. Chaque type de cellule a une signature colorimétrique spécifique à sa morphologie. La couleur de chaque carré correspond à la couleur réelle du centre du cluster, convertie en RGB.")
 
-               
-    captions = {
-    "Basophile": "Reconnu principalement par la faible luminosité de son noyau "
-    "(Intra mean 2 L bas) — le cluster 2 correspondant au violet foncé caractéristique."
-    "Une luminosité élevée dans ce cluster ainsi que la présence de teintes roses du cluster 5, poussent fortement contre la classe.",
-    
-        
-    "Éosinophile": "Reconnu par sa grande taille — la faible proportion de fond (cluster 9) "
-    "indique un cytoplasme volumineux. La teinte rose du cytoplasme (cluster 5) "
-    "est le signal colorimétrique distinctif. C'est la cellule la plus reconnaissable visuellement.",
-    
-    "Érythroblaste": "Reconnu par la texture homogène et dense de son noyau (GLCM homogeneity élevée) — "
-    "contrairement aux autres cellules à noyau sombre, il est compact et sans granularité. "
-    "La teinte violette concentrée (cluster 2) et l'absence de pixels très sombres au centre (cluster 1) "
-    "le distinguent du lymphocyte.",
-    
-    "IG": "Signal SHAP plus diffus que les autres classes, reflétant l'hétérogénéité biologique de la catégorie "
-    "qui regroupe plusieurs stades de maturation. Reconnu par sa grande taille (cluster 9 faible) et la variabilité "
-    "de luminosité dans son noyau irrégulier (Intra std 1 L), absent chez les cellules matures.",
-    
-    "Lymphocyte": "L'absence de pixels violet du cluster 2 au centre de l'image (r1 hist 2 bas) le distingue du basophile. L'absence de teintes orangées (cluster 7) "
-    "le distingue de l'éosinophile.",
-    
-    "Monocyte": "Reconnu par sa très grande taille avec la plus faible proportion de fond du dataset (cluster 9 très bas). "
-    "Son cytoplasme violet s'étend jusqu'en périphérie (cluster 3 en r2 et r3). "
-    "La variabilité colorimétrique globale (Global std B) reflète la présence de vacuoles caractéristiques.",
-    
-    "Neutrophile": "Reconnu principalement par la distribution spatiale de son noyau multilobé — "
-    "les histogrammes radiaux dominent le signal (r1, r2 hist). Les lobes du noyau s'étendent dans l'anneau r2 "
-    "(r2 hist 1 élevé)."
-    "C'est le seul type où la structure spatiale prime sur la couleur.",
-    
-    "Plaquette": "Reconnu par l'absence totale de cytoplasme — là où les autres cellules ont des pixels foncés en r2, la plaquette n'a que du fond beige (r2 hist 1 très bas, r2 hist 13 élevé). L'image est quasi homogène (Global std L et A faibles). Les valeurs SHAP les plus extrêmes du dataset confirment que c'est la classe la plus facile à identifier.",
-    }
+    col1, col2 = st.columns([1, 0.05])
+    with col1:
+        fig = plot_hist()
+        st.pyplot(fig)
+    st.caption("BA : basophile, EO : éosinophile,  ERB : érythroblaste, IG : granulocyte immature, LY : lymphocyte, MO : monocyte, SNE : neutrophile, PLT : plaquette.")
+ 
+    vspace(20)
 
-    vspace(10)
+    st.subheader("Interprétabilité - SHAP par classe")
+    st.caption("Top 10 des features contribuant à la classification des images pour les modèles XGBoost et LGBM.")
     classe = st.selectbox("Classe", list(CLASSES_FR), key="shap")
-    cols = st.columns([0.25, 2, 0.25])
+    cols = st.columns([0.25, 2, 0.4])
     with cols[1]:
         st.image(f"images/shap/shap_{classe}.png")
-    vspace(10)
-    st.write(captions[classe])
 
+    st.caption("Lire : 'Hist 1' -> proportion du cluster 1, 'Intra mean 1 L' -> moyenne intra-cluster 1 sur la composante L*, 'r1 hist 1' -> proportion du cluster 1 dans le premier anneau concentrique.")
 
 
 with tab2:
