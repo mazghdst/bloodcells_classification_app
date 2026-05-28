@@ -165,9 +165,6 @@ class K_Means(BaseEstimator, TransformerMixin):
             # std (L, A, B)
             feat.extend(pixels.std(axis=0))
 
-            # Contrast
-            feat.extend([gray.mean(), gray.std()])
-
             # Contours (Sobel)
             sobelx = cv2.Sobel(gray, cv2.CV_64F, 1, 0)
             sobely = cv2.Sobel(gray, cv2.CV_64F, 0, 1)
@@ -207,34 +204,31 @@ class K_Means(BaseEstimator, TransformerMixin):
         feature_names = []
 
         for k in range(self.k):
-            feature_names.append(f"hist_{k+1}")
+            feature_names.append(f"Hist {k+1}")
 
         for i in range(self.k):
             for c in ["L", "A", "B"]:
-                feature_names.append(f"intra_mean_{i+1}_{c}")
+                feature_names.append(f"Intra mean {i+1} {c}")
 
         for i in range(self.k):
             for c in ["L", "A", "B"]:
-                feature_names.append(f"intra_std_{i+1}_{c}")
+                feature_names.append(f"Intra std {i+1} {c}")
 
         for c in ["L", "A", "B"]:
-            feature_names.append(f"global_mean_{c}")
+            feature_names.append(f"Global mean {c}")
 
         for c in ["L", "A", "B"]:
-            feature_names.append(f"global_std_{c}")
+            feature_names.append(f"Global std {c}")
 
         for stat in ["mean", "std"]:
-            feature_names.append(f"global_contrast_{stat}")
-
-        for stat in ["mean", "std"]:
-            feature_names.append(f"edges_{stat}")
+            feature_names.append(f"Sobel {stat}")
 
         for tex in ["contrast", "homogeneity", "energy"]:
-            feature_names.append(f"glcm_{tex}")
+            feature_names.append(f"GLCM {tex}")
 
-        for radii in ["r_1", "r_2", "r_3", "r_4"]:
+        for radii in ["r1", "r2", "r3", "r4"]:
             for k in range(self.k):
-                feature_names.append(f"{radii}_hist_{k+1}")
+                feature_names.append(f"{radii} hist {k+1}")
 
         return feature_names
 

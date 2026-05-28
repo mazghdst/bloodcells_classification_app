@@ -171,7 +171,7 @@ with tab1:
         data_cv5 = {
             "Modèle": ["SVM", "XGBoost", "LGBM", "Voting Classifier"],
             "Accuracy (%)": ["97.87 ± 0.39", "97.66 ± 0.22", "97.83 ± 0.24", "98.13 ± 0.29"],
-            "F1 macro (%)": ["97.62 ± 0.37", "97.66 ± 0.30", "97.89 ± 0.29", "98.24 ± 0.31"],
+            "F1 macro (%)": ["97.92 ± 0.43", "97.66 ± 0.30", "97.89 ± 0.29", "98.24 ± 0.31"],
         }
         st.dataframe(data_cv5)
         st.caption("La CV5 n'a pas été appliquée aux modèles DL en raison du coût computationnel.")
