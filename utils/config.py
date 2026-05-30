@@ -38,7 +38,6 @@ CLASSES_MAP = {
 }
 
 ERRORS_MAP = {
-    "Basophil": "Basophile",
     "Basophil": "Basophile", 
     "Eosinophil": "Éosinophile", 
     "Erythroblast": "Érythroblaste",

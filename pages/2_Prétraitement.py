@@ -43,8 +43,8 @@ with tab1:
         <div style="font-size:20px; color:#ccc;">→</div>
         <div style="background:#f8f8f8; border-radius:10px; padding:14px 20px; text-align:center; flex:1;">
             <div style="font-size:20px;">✂️</div>
-            <div style="font-weight:600; margin:4px 0;">Crop</div>
-            <div style="font-size:12px; color:#888;">150 × 150</div>
+            <div style="font-weight:600; margin:4px 0;">Resize + Crop</div>
+            <div style="font-size:12px; color:#888;">90 × 90</div>
         </div>
         <div style="font-size:20px; color:#ccc;">→</div>
         <div style="background:#f8f8f8; border-radius:10px; padding:14px 20px; text-align:center; flex:1;">
@@ -118,19 +118,19 @@ with tab1:
     #         st.caption("Segmentation par K-Means. Les couleurs correspondent aux centres des 8 clusters.")
 
     
-    st.caption("Dimension initiale : 150 × 150 × 3 = 67 500, rendant la classification directe difficile sur CPU.")
+    st.caption("Dimension initiale : 90 × 90 × 3 = 24 300, rendant la classification directe difficile sur CPU.")
 
     vspace(10)
     with st.expander("Voir un exemple de segmentation K-Means par type de cellule"):
         classes = [
-            ("basophil", "Basophile"),
-            ("eosinophil", "Éosinophile"),
-            ("erythroblast", "Érythroblaste"),
+            ("basophile", "Basophile"),
+            ("eosinophile", "Éosinophile"),
+            ("erythroblaste", "Érythroblaste"),
             ("ig", "IG"),
             ("lymphocyte", "Lymphocyte"),
             ("monocyte", "Monocyte"),
-            ("neutrophil", "Neutrophile"),
-            ("platelet", "Plaquette"),
+            ("neutrophile", "Neutrophile"),
+            ("plaquette", "Plaquette"),
         ]
         
         row1 = st.columns(4)
@@ -221,7 +221,8 @@ with tab1:
                 "label":"Classe"
             },
             title=f"{len(df_plot):,} cellules · {len(selected_classes)} classes",
-            opacity=opacity
+            opacity=opacity,
+            render_mode="svg"
         )
 
         fig_umap.update_traces(

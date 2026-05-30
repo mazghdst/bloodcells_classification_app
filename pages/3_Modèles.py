@@ -6,6 +6,7 @@ import numpy as np
 import cv2
 import matplotlib.patches as patches
 from collections import defaultdict
+from matplotlib.ticker import FormatStrFormatter
 import matplotlib.pyplot as plt
 import plotly.express as px
 from utils.config import vspace
@@ -101,6 +102,7 @@ def plot_hist():
             )
 
         ax.add_patch(rect)
+        ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
 
     plt.tight_layout()
     return fig
@@ -196,11 +198,11 @@ with tab1:
         </div>
         <div style="background:#f8f8f8; border-radius:10px; padding:16px 24px; flex:1;">
             <div style="font-size:13px; color:#888;">Accuracy</div>
-            <div style="font-size:28px; font-weight:500; margin:8px 0;">98.45%</div>
+            <div style="font-size:28px; font-weight:500; margin:8px 0;">98.39%</div>
         </div>
         <div style="background:#f8f8f8; border-radius:10px; padding:16px 24px; flex:1;">
             <div style="font-size:13px; color:#888;">F1 macro</div>
-            <div style="font-size:28px; font-weight:500; margin:8px 0;">98.52%</div>
+            <div style="font-size:28px; font-weight:500; margin:8px 0;">98.51%</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -235,8 +237,8 @@ with tab1:
     with st.expander("Résultats Validation Croisée 5-Fold (CV5)"):
         data_cv5 = {
             "Modèle": ["SVM", "XGBoost", "LGBM", "Voting Classifier"],
-            "Accuracy (%)": ["97.87 ± 0.39", "97.66 ± 0.22", "97.83 ± 0.24", "98.13 ± 0.29"],
-            "F1 macro (%)": ["97.92 ± 0.43", "97.66 ± 0.30", "97.89 ± 0.29", "98.24 ± 0.31"],
+            "Accuracy (%)": ["98.12 ± 0.35", "97.66 ± 0.40", "97.93 ± 0.32", "98.29 ± 0.36"],
+            "F1 macro (%)": ["98.23 ± 0.37", "97.69 ± 0.46", "98.02 ± 0.37", "98.42 ± 0.37"],
         }
         st.dataframe(data_cv5)
         st.caption("La CV5 n'a pas été appliquée aux modèles DL en raison du coût computationnel.")
@@ -386,8 +388,8 @@ with tab3:
             "Modèle": ["SVM", "XGBoost", "LGBM", "Voting Classifier", 
                         "EfficientNetV2S", "EfficientNetV2M", "DenseNet121", 
                         "ResNet50V2", "VGG19", "Xception", "Ensemble"],
-            "Accuracy (%)": [97.57, 97.72, 98.21, 98.45, 98.97, 98.92, 98.89, 98.77, 98.97, 98.45, 99.21],  
-            "F1 macro (%)": [97.67, 97.72, 98.31, 98.52, 99.02, 98.95, 98.90, 98.87, 99.03, 98.56, 99.24],      
+            "Accuracy (%)": [98.33, 97.72, 97.83, 98.39, 98.97, 98.92, 98.89, 98.77, 98.97, 98.45, 99.21],  
+            "F1 macro (%)": [98.42, 97.72, 97.82, 98.51, 99.02, 98.95, 98.90, 98.87, 99.03, 98.56, 99.24],      
         })
 
         st.dataframe(df_scores[["Modèle", "Accuracy (%)", "F1 macro (%)"]], use_container_width=True, hide_index=True)
@@ -432,9 +434,9 @@ with tab3:
 
     df_temps = pd.DataFrame({
         "": ["Training", "Inférence/image"],
-        "ML (CPU)": ["~ 1 min", "~ 4 ms"], 
+        "ML (CPU)": ["~ 45 s", "~ 2.6 ms"], 
         "DL (GPU)": ["1h – 3h", "10 - 25  ms (batch 32)"],
     })
 
     st.dataframe(df_temps, use_container_width=True, hide_index=True)
-    st.caption("Les deux meilleurs modèles DL (EfficientNetV2S et VGG19) offrent le meilleur compromis : ~2h de training et ~16 ms/image en inférence (batch 32)")
+    st.caption("Les deux meilleurs modèles DL (EfficientNetV2S et VGG19) offrent le meilleur compromis : ~2h de training et ~16 ms/image en inférence (batch 32).")
