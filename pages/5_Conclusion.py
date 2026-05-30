@@ -12,7 +12,7 @@ st.divider()
 
 st.markdown("### Principaux résultats")
 st.markdown("""
-- Le pipeline ML — extraction de features via un clustering K-Means - offre une classification **rapide sur CPU** dont chaque prédiction peut être **expliquée** et **justifiée** via SHAP
+- Le pipeline ML — extraction de features via une segmentation K-Means - offre une classification **rapide sur CPU** dont chaque prédiction peut être **expliquée** et **justifiée** via SHAP
 - Le Voting Classifier atteint **98.29% d'accuracy** en validation croisée sur 5 folds, confirmant la pertinence des **features colorimétriques et texturales** extraites pour cette tâche de classification
 - Les modèles DL par Transfer Learning atteignent **99,21% d'accuracy**, soit la meilleure performance observée
 - Les **Grad-CAM** confirment que les modèles DL focalisent leur attention sur les zones biologiquement pertinentes — noyau et cytoplasme — ce qui valide leur comportement au-delà du simple score
@@ -24,7 +24,7 @@ st.markdown("### Limites")
 st.markdown("""
 - Les classes morphologiquement proches restent les plus difficiles à séparer — IG, Monocyte et Neutrophile — visible sur l'UMAP et les matrices de confusion
 - Les deux approches sont entraînées et évaluées sur le dataset PBC uniquement, ce qui limite la généralisation à d'autres protocoles de coloration ou équipements
-- Les performances du pipeline ML ont été validées par validation croisée 5 folds, contrairement aux modèles DL évalués sur un unique split train/test —           
+- Les performances du pipeline ML ont été validées par validation croisée 5 folds, contrairement aux modèles DL évalués sur un unique split train/test           
 - Les modèles DL sont coûteux en mémoire et dépendants d'un GPU pour un temps d'inférence raisonnable
 """)
 

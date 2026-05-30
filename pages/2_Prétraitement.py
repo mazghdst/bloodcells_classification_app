@@ -118,7 +118,7 @@ with tab1:
     #         st.caption("Segmentation par K-Means. Les couleurs correspondent aux centres des 8 clusters.")
 
     
-    st.caption("Dimension initiale : 90 × 90 × 3 = 24 300, rendant la classification directe difficile sur CPU.")
+    #st.caption("Dimension initiale : 90 × 90 × 3 = 24 300, rendant la classification directe difficile sur CPU.")
 
     vspace(10)
     with st.expander("Voir un exemple de segmentation K-Means par type de cellule"):
