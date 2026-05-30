@@ -290,7 +290,7 @@ with tab2:
             ],
             "Paramètres"   : ["21M", "54M", "25M", "8M", "143M", "22M"],
             "Particularité": [
-                "Optimisé pour le compromis précision/coût de calcul",
+                "Optimisée pour le compromis précision/coût de calcul",
                 "Version plus profonde d'EfficientNetV2S",
                 "Connexions résiduelles ",
                 "Connexions denses",
