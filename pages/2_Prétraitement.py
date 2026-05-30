@@ -49,7 +49,7 @@ with tab1:
         <div style="font-size:20px; color:#ccc;">→</div>
         <div style="background:#f8f8f8; border-radius:10px; padding:14px 20px; text-align:center; flex:1;">
             <div style="font-size:20px;">🎨</div>
-            <div style="font-weight:600; margin:4px 0;">Espace L*a*b*</div>
+            <div style="font-weight:600; margin:4px 0;">RGB → L*a*b*</div>
             <div style="font-size:12px; color:#888;">conversion</div>
         </div>
         <div style="font-size:20px; color:#ccc;">→</div>
@@ -109,15 +109,14 @@ with tab1:
         hide_index=True,
     )
     st.metric("Dimension totale", "99")
-    # with col2:
-    #     img = Image.open(f"{FIGURES_DIR}/kmeans_radii.png").convert("RGB")
-    #     st.image(img, width="stretch")
-        
-    #     col11, col12, col13 = st.columns([0.1, 1, 0.1])
-    #     with col12:
-    #         st.caption("Segmentation par K-Means. Les couleurs correspondent aux centres des 8 clusters.")
 
-    
+
+    # with col2:
+    #     img = Image.open(f"./images/figures/kmeans_radii.png").convert("RGB")
+    #     st.image(img, width="stretch")
+
+
+
     #st.caption("Dimension initiale : 90 × 90 × 3 = 24 300, rendant la classification directe difficile sur CPU.")
 
     vspace(10)
