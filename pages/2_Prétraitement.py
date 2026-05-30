@@ -168,11 +168,11 @@ with tab1:
     if "opacity" not in st.session_state:
         st.session_state.opacity = 0.5
 
-    left, middle, right = st.columns([2.,0.2, 1], vertical_alignment="top")
+    before ,left, middle, right, after = st.columns([0.05, 2.,0.3, 0.8, 0.2], vertical_alignment="top")
 
     with right:
         
-        vspace(60)
+        vspace(85)
         selected_classes = st.multiselect(
             "Classes",
             classes,
