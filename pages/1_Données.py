@@ -140,7 +140,7 @@ Les images du dataset PBC présentent globalement une bonne qualité :
 Cependant certaines images contiennent plusieurs cellules nucléées simultanément.
 Les analyses Grad-CAM ont montré que certains modèles focalisent parfois leur attention sur une cellule secondaire.
  
-Il est également à noter qu'une faible proportion d'images présentent un fond rose (~ 3%) .
+Il est également à noter qu'une faible proportion d'images présentent un fond rose (2.6 %) .
 """)
  
 captions = ["Cellules doubles", "Cellules multiples", "Variation de coloration"]
