@@ -23,7 +23,7 @@ def distribution_show():
         color="category",
         color_discrete_sequence=["#8b8fa8"]
     )
-    fig.update_traces(texttemplate="%{text:.1f}%", textposition="outside")
+    fig.update_traces(texttemplate=" %{text:.1f}%", textposition="outside")
     fig.update_layout(
         showlegend=False,
         height=350,
