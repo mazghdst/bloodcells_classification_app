@@ -85,6 +85,7 @@ def preprocess_image(img):
     img_resized = img_cropped.resize(IMG_SIZE_ML)
     return img_resized
 
+
 def get_images_of_class(cls, n=5):
     paths = glob(f"{SAMPLE_DIR}/{cls}/*")
     imgs = []
@@ -262,7 +263,8 @@ with tab1:
                         else:
                             st.error(f"**Classe prédite : {label}**")
                     else: 
-                        st.success(f"**Classe prédite : {label}**")
+                        st.info(f"**Classe prédite : {label}**")
+                       # st.success(f"**Classe prédite : {label}**")
 
                     df_probas = pd.DataFrame({
                         "Classe": CLASSES_FR,
