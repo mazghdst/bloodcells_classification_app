@@ -4,7 +4,6 @@ import os
 # Third-party libraries
 import joblib
 import random
-import cv2
 import numpy as np
 import pandas as pd
 from PIL import Image
@@ -238,7 +237,7 @@ with tab1:
     else:
         uploaded = st.file_uploader("Choisir une image", type=["png", "jpg", "jpeg"])
         if uploaded:
-            demo_image = Image.open(uploaded)
+            demo_image = Image.open(uploaded).resize(IMG_SIZE_DL)
 
     st.divider()
 
@@ -264,7 +263,6 @@ with tab1:
                             st.error(f"**Classe prédite : {label}**")
                     else: 
                         st.info(f"**Classe prédite : {label}**")
-                       # st.success(f"**Classe prédite : {label}**")
 
                     df_probas = pd.DataFrame({
                         "Classe": CLASSES_FR,
@@ -298,6 +296,7 @@ with tab1:
                     else:
                         st.caption("Grad-CAM")
 
+
                 with col3:
                     if demo_categorie is not None:
                         if label == demo_categorie:
@@ -305,7 +304,7 @@ with tab1:
                         else:
                             st.error(f"**Classe prédite : {label}**")
                     else: 
-                        st.success(f"**Classe prédite : {label}**")
+                        st.info(f"**Classe prédite : {label}**")
                 
                     df_probas = pd.DataFrame({
                         "Classe": CLASSES_FR,
