@@ -110,28 +110,55 @@ def plot_hist():
 
 def plot_history(history_dict):
 
+    train_color = "#1B365D"
+    val_color   = "#B23A48"
+    
     loss = history_dict["loss"]
     val_loss = history_dict["val_loss"]
     acc = history_dict["accuracy"]
     val_acc = history_dict["val_accuracy"]
     epochs = range(1, len(loss) + 1)
 
-    loss_fig, ax1 = plt.subplots(figsize=(4.5, 3.5), dpi=300)
+    loss_fig, ax1 = plt.subplots(figsize=(4, 3.2), dpi=300)
 
-    ax1.plot(epochs, loss, label="Train Loss")
-    ax1.plot(epochs, val_loss, label="Val Loss")
-    ax1.set_xlabel("Époque")
+    ax1.plot(epochs, loss, label="Entraînement",linewidth=1.5, color=train_color)
+    ax1.plot(epochs, val_loss, label="Validation",linewidth=1.5,
+         marker="o",
+         markersize=2, color=val_color)
+    ax1.spines["top"].set_visible(False)
+    ax1.spines["right"].set_visible(False)
+    ax1.set_xlabel("Époque", fontsize=8.5)
+    ax1.tick_params(labelsize=8)
     ax1.grid(True, which="both", linestyle="--", linewidth=0.3, color="#cccccc", alpha=0.5)
-    ax1.legend()
+    ax1.legend(loc="upper right", fontsize=8, frameon=False)
+    ax1.set_title(
+        "Fontion de perte",
+        fontsize=11,
+        fontweight="semibold",
+        fontfamily="Arial",
+        pad=15,
+    )
     plt.tight_layout()
 
     # Accuracy
-    acc_fig, ax2 = plt.subplots(figsize=(4.5, 3.5), dpi=300)
-    ax2.plot(epochs, acc, label="Train Acc")
-    ax2.plot(epochs, val_acc, label="Val Acc")
-    ax2.set_xlabel("Époque")
+    acc_fig, ax2 = plt.subplots(figsize=(4, 3.2), dpi=300)
+    ax2.plot(epochs, acc, label="Entraînement",linewidth=1.5, color=train_color)
+    ax2.plot(epochs, val_acc, label="Validation", linewidth=1.5,
+         marker="o",
+         markersize=2, color=val_color)
+    ax2.spines["top"].set_visible(False)
+    ax2.spines["right"].set_visible(False)
+    ax2.set_xlabel("Époque", fontsize=8.5)
+    ax2.tick_params(labelsize=8)
     ax2.grid(True, which="both", linestyle="--", linewidth=0.3, color="#cccccc", alpha=0.5)
-    ax2.legend()
+    ax2.legend(loc="lower right", fontsize=8, frameon=False)
+    ax2.set_title(
+        "Accuracy",
+        fontsize=11,
+        fontweight="semibold",
+        fontfamily="Arial",
+        pad=15,
+    )
     plt.tight_layout()
     return loss_fig, acc_fig
 
@@ -148,7 +175,8 @@ def read(history_path):
             history_dict[k].append(v)
 
     return history_dict
-    
+
+
 st.title("🧠 Modèles")
 st.subheader("Présentation des modèles et résultats associés")
 
@@ -363,15 +391,13 @@ with tab2:
         history_dict = read(history_path)
         loss_fig, acc_fig = plot_history(history_dict)
 
-        col_loss, col_acc = st.columns(2)
+        col_loss, col_acc, space = st.columns([1, 1, 0.05])
         with col_loss:
             vspace(10) 
-            st.markdown("<div style='text-align: center;'><b>Fonction de perte (loss)</b></div>", unsafe_allow_html=True)
             st.pyplot(loss_fig, use_container_width=True)
 
         with col_acc:
             vspace(10)
-            st.markdown("<div style='text-align: center;'><b>Accuracy</b></div>", unsafe_allow_html=True)
             st.pyplot(acc_fig, use_container_width=True)
 
 
