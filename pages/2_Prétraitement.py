@@ -148,7 +148,7 @@ with tab1:
 
     st.subheader("UMAP — projection des features")
 
-    st.write("Projection UMAP des images à partir des 99 features extraites par le pipeline ML, réduite à 2 composantes. Chaque point représente une image, coloré selon sa classe cellulaire.")
+    st.write("Projection UMAP des images du dataset à partir des 99 features extraites pour chacune d'elles. Chaque point représente une image, coloré selon sa classe cellulaire.")
 
     df_umap = load_umap(UMAP_CSV)
     classes = sorted(df_umap["label"].unique())
@@ -172,7 +172,7 @@ with tab1:
 
     with right:
         
-        vspace(85)
+        vspace(40)
         selected_classes = st.multiselect(
             "Classes",
             classes,
@@ -219,7 +219,7 @@ with tab1:
                 "umap_2":"UMAP dim 2",
                 "label":"Classe"
             },
-            title=f"{len(df_plot):,} cellules · {len(selected_classes)} classes",
+           # title=f"{len(df_plot):,} cellules · {len(selected_classes)} classes",
             opacity=opacity,
             render_mode="svg"
         )
@@ -229,13 +229,13 @@ with tab1:
         )
 
         fig_umap.update_layout(
-            height=600,
+            height=550,
             legend_title="Classe cellulaire",
             legend_title_font=dict(size=15),
             plot_bgcolor="white",
-            title_font=dict(size=20, color="#1a1a1a"),
-            xaxis=dict(showgrid=True, gridcolor="#f0f0f0"),
-            yaxis=dict(showgrid=True, gridcolor="#f0f0f0"),
+            #title_font=dict(size=20, color="#1a1a1a"),
+            xaxis=dict(showgrid=True, gridcolor="#f2f2f2", gridwidth=0.25),
+            yaxis=dict(showgrid=True, gridcolor="#f2f2f2", gridwidth=0.25),
             legend=dict(orientation="h", y=-0.2, font=dict(size=14), itemsizing="constant")
         )
 
