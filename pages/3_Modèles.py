@@ -414,8 +414,8 @@ with tab3:
             "Modèle": ["SVM", "XGBoost", "LGBM", "Voting Classifier", 
                         "EfficientNetV2S", "EfficientNetV2M", "DenseNet121", 
                         "ResNet50V2", "VGG19", "Xception", "Ensemble"],
-            "Accuracy (%)": [98.33, 97.72, 97.83, 98.39, 98.97, 98.92, 98.89, 98.77, 98.97, 98.45, 99.21],  
-            "F1 macro (%)": [98.42, 97.72, 97.82, 98.51, 99.02, 98.95, 98.90, 98.87, 99.03, 98.56, 99.24],      
+            "Accuracy (%)": [98.33, 97.72, 97.83, 98.39, 98.97, 98.92, 98.89, 98.77, 98.97, 98.62, 99.21],  
+            "F1 macro (%)": [98.42, 97.72, 97.82, 98.51, 99.02, 98.95, 98.90, 98.87, 99.03, 98.64, 99.24],      
         })
 
         st.dataframe(df_scores[["Modèle", "Accuracy (%)", "F1 macro (%)"]], use_container_width=True, hide_index=True)
