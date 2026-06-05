@@ -160,6 +160,7 @@ with tab1:
         key="demo_approche"
     )
 
+    demo_model = None
     if demo_approche == "Machine Learning":
         demo_model = st.selectbox("Modèle", ["SVM", "XGBoost", "LGBM", "Voting Classifier"],
         index=None,
@@ -175,7 +176,7 @@ with tab1:
 
     demo_source = st.radio(
         "Sélection de l'image",
-        ["Importer une image", "Base de données"], 
+        ["Base de données", "Importer une image"], 
         horizontal=True, 
         key="demo_source"
     )
@@ -241,7 +242,7 @@ with tab1:
 
     st.divider()
 
-    if demo_image and st.button("🔮 Prédire", disabled=demo_image is None):
+    if demo_image and demo_model and st.button("🔮 Prédire", disabled=demo_image is None):
         with st.spinner("Analyse en cours..."):
 
             if demo_approche == "Machine Learning":
@@ -295,7 +296,11 @@ with tab1:
                         st.caption("⚠️ Grad-CAM non interprétable")
                     else:
                         st.caption("Grad-CAM")
+                    demo_image.save("original.png")
 
+                    Image.fromarray(gradcam_im).save(
+                        f"gradcam_{demo_model}.png"
+                    )
 
                 with col3:
                     if demo_categorie is not None:
@@ -325,53 +330,69 @@ with tab2:
 
     st.caption("Comparaison des résultats de classification de l'ensemble des modèles seuls de machine learning et de deep learning à partir d'une image.") 
 
-    compare_categorie = st.selectbox("Catégorie", [
-            "Basophile", "Éosinophile", "Érythroblaste", "IG",
-            "Lymphocyte", "Monocyte", "Neutrophile", "Plaquette"
-        ], 
-        key="compare_categorie",
-        index=None, 
-        placeholder="Selectionnez une catégorie de cellule")
+    compare_source = st.radio(
+        "Sélection de l'image",
+        ["Base de données", "Importer une image"], 
+        horizontal=True, 
+        key="compare_source"
+    )
 
-    if (
-        st.session_state.get("compare_categorie_courante") != compare_categorie
-        or "compare_imgs_categorie" not in st.session_state
-    ):
-        st.session_state.compare_imgs_categorie = get_images_of_class(compare_categorie, n=6)
-        st.session_state.compare_categorie_courante = compare_categorie
-        st.session_state.compare_selected_image = None
-        st.session_state.compare_selected_idx = None
-        st.session_state.compare_label_pred = None
-        st.session_state.compare_probs = None
-        st.session_state.compare_gradcam_im = None
+    compare_image = None
+    compare_categorie = None
 
-    if compare_categorie is not None:
-        if st.button("🎲 Nouveaux exemples", key="compare_random"):
+    if compare_source == "Base de données":
+        compare_categorie = st.selectbox("Catégorie", [
+                "Basophile", "Éosinophile", "Érythroblaste", "IG",
+                "Lymphocyte", "Monocyte", "Neutrophile", "Plaquette"
+            ], 
+            key="compare_categorie",
+            index=None, 
+            placeholder="Selectionnez une catégorie de cellule")
+
+        if (
+            st.session_state.get("compare_categorie_courante") != compare_categorie
+            or "compare_imgs_categorie" not in st.session_state
+        ):
             st.session_state.compare_imgs_categorie = get_images_of_class(compare_categorie, n=6)
+            st.session_state.compare_categorie_courante = compare_categorie
             st.session_state.compare_selected_image = None
             st.session_state.compare_selected_idx = None
+            st.session_state.compare_label_pred = None
+            st.session_state.compare_probs = None
+            st.session_state.compare_gradcam_im = None
 
-    compare_imgs = st.session_state.compare_imgs_categorie
+        if compare_categorie is not None:
+            if st.button("🎲 Nouveaux exemples", key="compare_random"):
+                st.session_state.compare_imgs_categorie = get_images_of_class(compare_categorie, n=6)
+                st.session_state.compare_selected_image = None
+                st.session_state.compare_selected_idx = None
 
-    cols_per_row = 6
-    for i in range(0, len(compare_imgs), cols_per_row):
-        cols = st.columns(cols_per_row)
-        for j, col in enumerate(cols):
-            if i + j < len(compare_imgs):
-                idx = i + j
-                compare_img = compare_imgs[idx]
-                with col:
-                    if st.session_state.compare_selected_idx == idx:
-                        st.image(compare_img, use_container_width=True)
-                        st.button("✅", key=f"compare_button_{idx}")
-                    else:
-                        st.image(compare_img, use_container_width=True)
-                        if st.button("✔", key=f"compare_button_{idx}"):
-                            st.session_state.compare_selected_idx = idx
-                            st.session_state.compare_selected_image = compare_img
-                            st.rerun()
+        compare_imgs = st.session_state.compare_imgs_categorie
 
-    compare_image = st.session_state.compare_selected_image
+        cols_per_row = 6
+        for i in range(0, len(compare_imgs), cols_per_row):
+            cols = st.columns(cols_per_row)
+            for j, col in enumerate(cols):
+                if i + j < len(compare_imgs):
+                    idx = i + j
+                    compare_img = compare_imgs[idx]
+                    with col:
+                        if st.session_state.compare_selected_idx == idx:
+                            st.image(compare_img, use_container_width=True)
+                            st.button("✅", key=f"compare_button_{idx}")
+                        else:
+                            st.image(compare_img, use_container_width=True)
+                            if st.button("✔", key=f"compare_button_{idx}"):
+                                st.session_state.compare_selected_idx = idx
+                                st.session_state.compare_selected_image = compare_img
+                                st.rerun()
+
+        compare_image = st.session_state.compare_selected_image
+
+    else:
+        compare_uploaded = st.file_uploader("Choisir une image", type=["png", "jpg", "jpeg"], key="compare_uploader")
+        if compare_uploaded:
+            compare_image = Image.open(compare_uploaded).resize(IMG_SIZE_DL)
 
     st.divider()
 
@@ -394,11 +415,13 @@ with tab2:
 
                     st.subheader(name)
 
-                    if label == compare_categorie:
-                        st.success(f"**Classe prédite : {label}**")
+                    if compare_categorie is not None:
+                        if label == compare_categorie:
+                            st.success(f"**Classe prédite : {label}**")
+                        else:
+                            st.error(f"**Classe prédite : {label}**")
                     else:
-                        st.error(f"**Classe prédite : {label}**")
-
+                        st.info(f"**Classe prédite : {label}**")
 
                     df_probas = pd.DataFrame({
                         "Classe": CLASSES_FR,
@@ -435,11 +458,13 @@ with tab2:
                         with col:
 
                             st.subheader(name)
-
-                            if label == compare_categorie:
-                                st.success(f"**Classe prédite : {label}**")
+                            if compare_categorie is not None:
+                                if label == compare_categorie:
+                                    st.success(f"**Classe prédite : {label}**")
+                                else:
+                                    st.error(f"**Classe prédite : {label}**")
                             else:
-                                st.error(f"**Classe prédite : {label}**")
+                                st.info(f"**Classe prédite : {label}**")
 
                             df=pd.DataFrame({
                                 "Classe":CLASSES_FR,
@@ -455,6 +480,13 @@ with tab2:
                                 hide_index=True,
                                 use_container_width=True
                             )
+
+            if compare_source == "Importer une image":
+                st.divider()
+                cols = st.columns(3)
+                with cols[1]:
+                    st.image(compare_image, width="stretch")
+                    st.caption("Image importée")
         
 
 
@@ -586,18 +618,4 @@ with tab3:
                                         use_container_width=True
                                     )   
                 
-            # if modele == "XGBoost":
-            #         xgb_model = model.named_steps['xgb']
-            #         kmeans = model.named_steps['kmeans']
 
-            #         feature_names = kmeans.get_feature_names()
-
-            #         importances = xgb_model.feature_importances_
-            #         indices = np.argsort(importances)[::-1][:15]  # top 15
-
-            #         df_imp = pd.DataFrame({
-            #             "Feature": [feature_names[i] for i in indices],
-            #             "Importance": importances[indices]
-            #         })
-
-            #         st.bar_chart(df_imp.set_index("Feature"))
