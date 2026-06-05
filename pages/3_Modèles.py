@@ -494,11 +494,13 @@ with tab3:
 
     st.subheader("Temps computationnels")
 
+    st.write("Le tableau ci-dessous présente les temps d'entraînement et d'inférence pour les approches ML (CPU) et DL (GPU).")
+
     df_temps = pd.DataFrame({
-        "": ["Training", "Inférence/image"],
-        "ML (CPU)": ["~ 45 s", "~ 2.6 ms"], 
-        "DL (GPU)": ["1h – 3h", "10 - 25  ms (batch 32)"],
+        "": ["Training", "Inférence globale", "Inférence unitaire"],
+        "ML ": ["45 s", "2 - 3 ms/image", "4 - 5 ms/image"], 
+        "DL ": ["1 – 3 h", "10 - 25  ms/image", "230 - 740 ms/image"],
     })
 
     st.dataframe(df_temps, use_container_width=True, hide_index=True)
-    st.caption("Les deux meilleurs modèles DL (EfficientNetV2S et VGG19) offrent le meilleur compromis : ~2h de training et ~16 ms/image en inférence (batch 32).")
+    st.caption("L'inférence globale porte sur l'ensemble de test (avec batchs de taille 32 pour le DL).")
