@@ -107,6 +107,33 @@ def plot_hist():
     plt.tight_layout()
     return fig
 
+@st.cache_data
+def load_shap_global():
+    df = pd.read_csv("files/shap_global.csv", sep=";")
+    return df
+
+def plot_importance():
+    df = load_shap_global()
+    fig = px.bar(
+        df,
+        x="importance",
+        y="feature",
+        orientation="h",
+        color_discrete_sequence=["#8b8fa8"]
+    )
+    fig.update_layout(
+        showlegend=False,
+        height=450,
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        yaxis_title="",
+        yaxis={'categoryorder': 'total ascending'},
+        margin=dict(l=0, r=0, t=0, b=0),
+        xaxis_title="Moyenne des valeurs absolues des SHAP values",
+    )
+    #fig.update_xaxes(range=[0, 22])
+    return fig
+
 
 def plot_history(history_dict):
 
@@ -286,14 +313,23 @@ with tab1:
  
     vspace(20)
 
-    st.subheader("Interprétabilité - SHAP par classe")
-    st.write("Top 10 des features contribuant à la classification des images pour les modèles XGBoost et LGBM.")
-    classe = st.selectbox("Classe", list(CLASSES_FR), key="shap")
-    cols = st.columns([0.25, 2, 0.4])
-    with cols[1]:
-        st.image(f"images/shap/shap_{classe}.png")
+    st.subheader("Interprétabilité - SHAP")
+    st.write("Top 15 des features contribuant à la classification des images pour les modèles XGBoost et LGBM.")
+
+    vspace(10)
+    col1, col2 = st.columns([1, 0.2])
+    with col1:
+        fig = plot_importance()
+        st.plotly_chart(fig, use_container_width=True)
 
     st.caption("Lire : 'Hist 1' -> proportion du cluster 1, 'Intra mean 1 L' -> moyenne intra-cluster 1 sur la composante L*, 'r1 hist 1' -> proportion du cluster 1 dans le premier anneau concentrique.")
+
+    with st.expander("Voir les SHAP values détaillées par classe"):
+        classe = st.selectbox("Classe", list(CLASSES_FR), key="shap")
+        cols = st.columns([0.25, 2, 0.4])
+        with cols[1]:
+            st.image(f"images/shap/shap_{classe}.png")
+
 
 
 with tab2:

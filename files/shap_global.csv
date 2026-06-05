@@ -1,0 +1,16 @@
+feature;importance
+Intra mean 4 B;0.70535755
+Intra mean 4 A;0.67163014
+Global std L;0.3014069
+Global mean B;0.29883677
+Sobel std;0.25959486
+Hist 1;0.24933115
+r3 hist 4;0.24604145
+Intra mean 1 B;0.23970915
+Intra std 1 L;0.23621352
+Intra std 3 A;0.20114134
+Global std A;0.19928794
+r3 hist 1;0.17641293
+r3 hist 2;0.1640338
+Hist 2;0.16113554
+Hist 4;0.1560907
