@@ -8,7 +8,7 @@ def vspace(height):
     )
 
 IMG_SIZE_DL = (360, 360)
-IMG_SIZE_ML = (150, 150)
+IMG_SIZE_ML = (90, 90)
 
 # --- Languages dic  ---
 CLASSES_EN = [
