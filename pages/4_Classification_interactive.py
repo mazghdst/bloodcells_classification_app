@@ -293,14 +293,14 @@ with tab1:
                     gradcam_im, class_idx = grad_cam(demo_image, model, MODEL_MAP.get(demo_model))
                     st.image(gradcam_im, width="stretch")
                     if demo_model in ["Xception", "ResNet50V2"]:
-                        st.caption("⚠️ Grad-CAM non interprétable")
+                        st.caption("⚠️ Grad-CAM peu interprétable")
                     else:
                         st.caption("Grad-CAM")
-                    demo_image.save("original.png")
+                    # demo_image.save("original.png")
 
-                    Image.fromarray(gradcam_im).save(
-                        f"gradcam_{demo_model}.png"
-                    )
+                    # Image.fromarray(gradcam_im).save(
+                    #     f"gradcam_{demo_model}.png"
+                    # )
 
                 with col3:
                     if demo_categorie is not None:
