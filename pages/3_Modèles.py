@@ -123,7 +123,7 @@ def plot_importance():
     )
     fig.update_layout(
         showlegend=False,
-        height=450,
+        height=400,
         plot_bgcolor='rgba(0,0,0,0)',
         paper_bgcolor='rgba(0,0,0,0)',
         yaxis_title="",
@@ -305,8 +305,8 @@ with tab1:
 
     vspace(10)
 
-    col1, col2 = st.columns([1, 0.05])
-    with col1:
+    col1, col2, col3 = st.columns([0.05, 1, 0.1])
+    with col2:
         fig = plot_hist()
         st.pyplot(fig)
     st.caption("BA : basophile, EO : éosinophile,  ERB : érythroblaste, IG : granulocyte immature, LY : lymphocyte, MO : monocyte, SNE : neutrophile, PLT : plaquette.")
@@ -314,15 +314,15 @@ with tab1:
     vspace(20)
 
     st.subheader("Interprétabilité - SHAP")
-    st.write("Top 15 des features contribuant à la classification des images pour les modèles XGBoost et LGBM.")
+    st.write("Top 15 des features contribuant à la classification des images pour les modèles XGBoost et LGBM. Les modèles exploitent les couleurs, proportions, textures et la localisation spatiale pour effectuer la classification.")
 
     vspace(10)
-    col1, col2 = st.columns([1, 0.2])
+    col1, col2 = st.columns([0.9, 0.2])
     with col1:
         fig = plot_importance()
         st.plotly_chart(fig, use_container_width=True)
 
-    st.caption("Lire : 'Hist 1' -> proportion du cluster 1, 'Intra mean 1 L' -> moyenne intra-cluster 1 sur la composante L*, 'r1 hist 1' -> proportion du cluster 1 dans le premier anneau concentrique.")
+    st.caption("Lire : 'Hist 1': proportion du cluster 1, 'Intra mean 1 L' -> moyenne intra-cluster 1 sur la composante L*, 'r1 hist 1' -> proportion du cluster 1 dans le premier anneau concentrique.")
 
     with st.expander("Voir les SHAP values détaillées par classe"):
         classe = st.selectbox("Classe", list(CLASSES_FR), key="shap")
