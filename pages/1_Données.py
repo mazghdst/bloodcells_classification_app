@@ -133,11 +133,11 @@ st.divider()
 st.subheader("Qualité des images et limites")
 st.write("""
 Les images du dataset PBC présentent globalement une bonne qualité :
-- images nettes
-- contraste homogène
-- cellules centrées
+- Images nettes
+- Contraste homogène
+- Cellules centrées
  
-Cependant certaines images contiennent plusieurs cellules nucléées simultanément.
+Cependant, quelques images contiennent plusieurs cellules nuclées.
 Les analyses Grad-CAM ont montré que certains modèles focalisent parfois leur attention sur une cellule secondaire.
  
 Il est également à noter qu'une faible proportion d'images présentent un fond rose (2.6 %) .
