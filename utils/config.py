@@ -65,7 +65,7 @@ ML_MODELS_DIR = "./models/ml"
 
 QUALITY_IMAGES = {
     "Cellules doubles": f"{QUALITY_DIR}/doubles.jpg",
-    "Cellules multiples": f"{QUALITY_DIR}/multiples.jpg",
+    "Absence de cellule cible": f"{QUALITY_DIR}/nocells.jpg",
     "Variation de coloration": f"{QUALITY_DIR}/variationcoloration.jpg",
 }
 
