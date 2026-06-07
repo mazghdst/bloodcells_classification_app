@@ -49,13 +49,17 @@ def load_report(path):
 @st.cache_data
 def load_kmeans_features():
     df = pd.read_csv(f"./files/kmeans_features.csv")
-    clusters = pd.read_csv(f"./files/kmeans_cluster_centers.csv")
+    return df
 
-    return df, clusters
+@st.cache_data
+def load_kmeans_clusters():
+    clusters = pd.read_csv(f"./files/kmeans_cluster_centers.csv")
+    return clusters
 
 def plot_hist():
 
-    df, clusters = load_kmeans_features()
+    df = load_kmeans_features()
+    clusters = load_kmeans_clusters()
     fig, axes = plt.subplots(2, 4, figsize=(12, 6.5))
 
     y = df["target"].astype("int").to_numpy()
@@ -111,6 +115,8 @@ def plot_hist():
 def load_shap_global():
     df = pd.read_csv("files/shap_global.csv", sep=";")
     return df
+
+
 
 def plot_importance():
     df = load_shap_global()
@@ -309,7 +315,7 @@ with tab1:
     with col2:
         fig = plot_hist()
         st.pyplot(fig)
-    st.caption("BA : basophile, EO : éosinophile,  ERB : érythroblaste, IG : granulocyte immature, LY : lymphocyte, MO : monocyte, SNE : neutrophile, PLT : plaquette.")
+    st.caption("BA : basophile, EO : éosinophile,  ERB : érythroblaste, IG : granulocyte immature, LY : lymphocyte, MO : monocyte, SNE : neutrophile, PLT : plaquette")
  
     vspace(20)
 
@@ -421,7 +427,7 @@ with tab2:
     st.subheader("Courbes d'apprentissage")
 
     if selected_dl == "Ensemble (EfficientNetV2S + VGG19 + ResNet50V2 + Xception)":
-        st.write("Le modèle Ensemble ne dispose pas de courbes d'apprentissage propre, car ses prédictions résultent d'un vote par moyenne pondérée des probabilités (soft voting) des modèles qui le composent, et non d'un entraînement indépendant.")
+        st.write("Le modèle d'ensemble ne dispose pas de courbes d'apprentissage propre, car ses prédictions résultent d'un vote par moyenne pondérée des probabilités (soft voting) des modèles qui le composent, et non d'un entraînement indépendant.")
     if selected_dl != "Ensemble (EfficientNetV2S + VGG19 + ResNet50V2 + Xception)":
         history_path = f"{RESULTS_DIR}/history/history_{MODEL_MAP.get(selected_dl)}.jsonl"
         history_dict = read(history_path)
@@ -489,7 +495,7 @@ with tab3:
 
         st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
 
-    st.caption("Ensemble : EfficientNetV2S + VGG19 + ResNet50V2 + Xception")
+    st.caption("Ensemble : EfficientNetV2S, VGG19, ResNet50V2 et Xception")
     st.divider()
 
     st.subheader("Temps computationnels")
