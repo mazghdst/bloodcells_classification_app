@@ -495,9 +495,9 @@ with tab2:
 with tab3:  
 
     st.subheader("Visualisation des erreurs")  
-    st.caption("Visualisation des erreurs de classification des 3 modèles de deep learning les plus performants : EfficientNetV2S, EfficientNetV2M et VGG19.")   
+    st.caption("Visualisation des erreurs de classification des modèles EfficientNetV2S, VGG19 et DenseNet121.")   
     errors_model = st.selectbox("Modèle", [
-            "EfficientNetV2S", "EfficientNetV2M", "VGG19"
+            "EfficientNetV2S", "VGG19", "DenseNet121",
         ], 
         key="errors_models",
         index=None,
@@ -558,8 +558,8 @@ with tab3:
 
             nb_errors_dic = {
                 "EfficientNetV2S": 35,
-                "EfficientNetV2M": 37,
                 "VGG19": 35,
+                "DenseNet121": 38,
             }
             st.caption(f"Nombre total d'erreurs : {nb_errors_dic[errors_model]} / 3 415 images.")
             gradcam_image = st.session_state.errors_selected_image   

@@ -106,8 +106,8 @@ MODEL_MAP = {
 # --- Grad-CAM ---
 GRADCAM_PATH_MAP = {
     "EfficientNetV2S": f"{DL_MODELS_DIR}/efficientnetv2s.keras",
-    "EfficientNetV2M": f"{DL_MODELS_DIR}/efficientnetv2m.keras",
     "VGG19": f"{DL_MODELS_DIR}/vgg19.keras",
+    "DenseNet121": f"{DL_MODELS_DIR}/densenet121.keras",
 }
 
 BACKBONE_MAP = {
