@@ -267,11 +267,15 @@ with tab1:
 
                     df_probas = pd.DataFrame({
                         "Classe": CLASSES_FR,
-                        "Probabilité": [round(prob, 6) for prob in probs]
-                    }).sort_values("Probabilité", ascending=False)
-                
+                        "Probabilité": probs,
+                    }).sort_values("Probabilité", ascending=False).head(3)
+
+                    df_probas["Probabilité"] = df_probas["Probabilité"].apply(
+                        lambda x: f"{100*x:.2f} %"
+                    )
+
                     st.dataframe(
-                        df_probas[df_probas["Probabilité"] > 1e-6], 
+                        df_probas, 
                         use_container_width=True, 
                         hide_index=True
                     )
@@ -296,11 +300,6 @@ with tab1:
                         st.caption("⚠️ Grad-CAM peu interprétable")
                     else:
                         st.caption("Grad-CAM")
-                    # demo_image.save("original.png")
-
-                    # Image.fromarray(gradcam_im).save(
-                    #     f"gradcam_{demo_model}.png"
-                    # )
 
                 with col3:
                     if demo_categorie is not None:
@@ -313,11 +312,15 @@ with tab1:
                 
                     df_probas = pd.DataFrame({
                         "Classe": CLASSES_FR,
-                        "Probabilité": [round(prob, 6) for prob in probs]
-                    }).sort_values("Probabilité", ascending=False)
+                        "Probabilité": probs,
+                    }).sort_values("Probabilité", ascending=False).head(3)
                 
+                    df_probas["Probabilité"] = df_probas["Probabilité"].apply(
+                        lambda x: f"{100*x:.2f} %"
+                    )
+
                     st.dataframe(
-                        df_probas[df_probas["Probabilité"] > 1e-6], 
+                        df_probas, 
                         use_container_width=True, 
                         hide_index=True
                     )
@@ -425,11 +428,15 @@ with tab2:
 
                     df_probas = pd.DataFrame({
                         "Classe": CLASSES_FR,
-                        "Probabilité": [round(prob, 4) for prob in probs]
-                    }).sort_values("Probabilité", ascending=False)
-                            
+                        "Probabilité": probs,
+                    }).sort_values("Probabilité", ascending=False).head(3)
+
+                    df_probas["Probabilité"] = df_probas["Probabilité"].apply(
+                        lambda x: f"{100*x:.2f} %"
+                    )      
+
                     st.dataframe(
-                        df_probas[df_probas["Probabilité"] != 0], 
+                        df_probas, 
                         use_container_width=True, 
                         hide_index=True
                     )
@@ -466,17 +473,17 @@ with tab2:
                             else:
                                 st.info(f"**Classe prédite : {label}**")
 
-                            df=pd.DataFrame({
+                            df_probas = pd.DataFrame({
                                 "Classe":CLASSES_FR,
-                                "Probabilité":
-                                np.round(probs,4)
-                            })
+                                "Probabilité": probs,
+                            }).sort_values("Probabilité", ascending=False).head(3)
+
+                            df_probas["Probabilité"] = df_probas["Probabilité"].apply(
+                                lambda x: f"{100*x:.2f} %"
+                            )
 
                             st.dataframe(
-                                df.sort_values(
-                                    "Probabilité",
-                                    ascending=False
-                                ).head(3),
+                                df_probas,
                                 hide_index=True,
                                 use_container_width=True
                             )
@@ -603,17 +610,18 @@ with tab3:
                                     else:
                                         st.error(f"**Classe prédite : {label}**")
 
-                                    df=pd.DataFrame({
+                                    df_probas=pd.DataFrame({
                                         "Classe":CLASSES_FR,
                                         "Probabilité":
-                                        np.round(probs,4)
-                                    })
+                                        probs,
+                                    }).sort_values("Probabilité", ascending=False).head(3)
+
+                                    df_probas["Probabilité"] = df_probas["Probabilité"].apply(
+                                        lambda x: f"{100*x:.2f} %"
+                                    )
 
                                     st.dataframe(
-                                        df.sort_values(
-                                            "Probabilité",
-                                            ascending=False
-                                        ).head(3),
+                                        df_probas,
                                         hide_index=True,
                                         use_container_width=True
                                     )   
