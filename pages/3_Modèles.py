@@ -307,7 +307,7 @@ with tab1:
 
     st.subheader("Interprétabilité - K-Means")
 
-    st.write("La figure ci-dessous donne un aperçu des proportions moyennes obtenues pour chaque cluster. Chaque type de cellule a une signature colorimétrique spécifique à sa morphologie. La couleur de chaque carré correspond à la couleur du centre du cluster, convertie en RGB.")
+    st.write("La figure ci-dessous donne un aperçu de la répartition moyenne des pixels entre les 8 clusters pour chaque type cellulaire. Chaque type cellulaire a une signature colorimétrique caractéristique. La couleur de chaque carré correspond à la couleur du centre du cluster, convertie en RGB.")
 
     vspace(10)
 
