@@ -91,7 +91,4 @@ Présentation des modèles, performances et interprétabilité.
 
 #### 🔍 Démonstation
 Classification interactive, Grad-CAM et analyse des erreurs.
-
-#### 💡 Conclusion
-Synthèse, limites et perspectives.
 """)
