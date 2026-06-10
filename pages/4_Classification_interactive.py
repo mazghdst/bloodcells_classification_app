@@ -237,6 +237,16 @@ with tab1:
 
     else:
         uploaded = st.file_uploader("Choisir une image", type=["png", "jpg", "jpeg"])
+        st.caption(
+            """
+            ℹ️ **Important**
+
+            Les modèles ont été entraînés sur les images du jeu de données PBC.
+            Les performances peuvent être dégradées sur des images acquises dans des conditions différentes.
+            Les modèles de Machine Learning utilisant un prétraitement par clustering K-Means
+            sont particulièrement sensibles aux variations de coloration.
+            """
+        )
         if uploaded:
             demo_image = Image.open(uploaded).resize(IMG_SIZE_DL)
 
@@ -394,6 +404,16 @@ with tab2:
 
     else:
         compare_uploaded = st.file_uploader("Choisir une image", type=["png", "jpg", "jpeg"], key="compare_uploader")
+        st.caption(
+            """
+            ℹ️ **Important**
+
+            Les modèles ont été entraînés sur les images du jeu de données PBC.
+            Les performances peuvent être dégradées sur des images acquises dans des conditions différentes.
+            Les modèles de Machine Learning utilisant un prétraitement par clustering K-Means
+            sont particulièrement sensibles aux variations de coloration.
+            """
+        )
         if compare_uploaded:
             compare_image = Image.open(compare_uploaded).resize(IMG_SIZE_DL)
 
